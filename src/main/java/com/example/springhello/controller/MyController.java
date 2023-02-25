@@ -21,7 +21,7 @@ public class MyController {
     // 이때 이름을 출력하는 메서드를 여기다 정의하세요.
     @ResponseBody
     @GetMapping("/person")
-    public String name(@RequestParam("name") String name) {
+    public String name(@RequestParam String name) {
         return name;
     }
 
@@ -33,7 +33,7 @@ public class MyController {
 
     @GetMapping("/person/sex/{sex}")
     @ResponseBody
-    public String sex(@PathVariable("sex") Sex sex) {
+    public String sex(@PathVariable Sex sex) {
         return sex.toString();
     }
 
@@ -47,6 +47,7 @@ public class MyController {
 
     // 4. PUT /add/{숫자1}/{숫자2}
     // 숫자1+숫자2를 반환하는 메서드를 정의하세요.
+    @ResponseBody
     @PostMapping("/add/{숫자1}/{숫자2}")
     public int addPrint(@PathVariable("숫자1") int n1, @PathVariable("숫자2") int n2) {
         return n1 + n2;
@@ -59,8 +60,13 @@ public class MyController {
     }
 
     @GetMapping("/forward")
-    public String forwordToHi() {
+    public String forwardToHi() {
         return "forward:/hi";
+    }
+
+    @GetMapping("/view/hello")
+    public String viewHello(){
+        return "/hello";
     }
 }
 
