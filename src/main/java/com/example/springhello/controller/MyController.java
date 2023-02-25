@@ -52,7 +52,16 @@ public class MyController {
         return n1 + n2;
     }
 
-    // 5. My2Controller를 정의하고 방문 횟수를 Count하여 출력하는 메서드를 정의하세요.
+   // 7. GET Mapping 의 hi로 리다이렉트 시켜서 hi를 반환하도록 해보세요;.
+    @GetMapping("/redirect")
+    public String redirectToHi() {
+        return "redirect:/hi";
+    }
+
+    @GetMapping("/forward")
+    public String forwordToHi() {
+        return "forward:/hi";
+    }
 }
 
 
