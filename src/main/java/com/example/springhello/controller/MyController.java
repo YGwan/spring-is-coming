@@ -58,7 +58,7 @@ public class MyController {
 
 // 6. ResponseBody의 의미를 알아세요. RestController, Controller의 차이
 
-// 7. 리다이렉션을 다루는 방법을 공부하세요. (redirect::)
+// 7. 리다이렉션, Forward을 다루는 방법을 공부하세요. (redirect와 forward의 차이를 공부해봐바)
 
 // 8. 쿠키 값을 다루는 방법을 공부하세요. (@Cookie)
 
