@@ -3,6 +3,7 @@ package com.example.springhello.controller;
 import com.example.springhello.utils.SearchParam;
 import com.example.springhello.utils.Sex;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -25,12 +26,10 @@ public class MyController {
         return name;
     }
 
-
     // 2. GET 요청이 (@PathVariable)
     // /person/sex/남
     // /person/sex/녀
     // 이때 성별을 출력하는 메서드를 여기다 정의히세요.
-
     @GetMapping("/person/sex/{sex}")
     @ResponseBody
     public String sex(@PathVariable Sex sex) {
@@ -67,6 +66,12 @@ public class MyController {
     @GetMapping("/view/hello")
     public String viewHello(){
         return "/hello";
+    }
+
+    @GetMapping("/view/thymeleaf/sample")
+    public String thymeleafHello(Model model) {
+        model.addAttribute("hello","서버에서 보내준 값입니다");
+        return "/thymeleaf_sample";
     }
 }
 
