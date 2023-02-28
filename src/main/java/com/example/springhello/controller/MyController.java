@@ -108,6 +108,26 @@ public class MyController {
         response.addCookie(cookie);
         return "cookie";
     }
+
+    @GetMapping("/session")
+    @ResponseBody
+    public String sessionEx(HttpSession session) {
+        session.setAttribute("name", "ygwan");
+        return "session";
+    }
+
+    @GetMapping("/session/load")
+    @ResponseBody
+    public String loadSession(HttpSession session) {
+        return (String)session.getAttribute("name");
+    }
+
+    @GetMapping("/session/delete")
+    @ResponseBody
+    public String delSession(HttpSession session) {
+        session.removeAttribute("name");
+        return "session";
+    }
 }
 
 // 6. RequestBody, ResponseBody의 의미를 알아세요. RestController, Controller의 차이
