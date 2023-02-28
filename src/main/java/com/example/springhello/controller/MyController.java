@@ -6,6 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @Controller
 public class MyController {
 
@@ -73,15 +78,21 @@ public class MyController {
         model.addAttribute("hello","서버에서 보내준 값입니다");
         return "/thymeleaf_sample";
     }
+
+    @GetMapping("/cookie")
+    public void cookie(HttpServletResponse response) {
+        String data = URLEncoder.encode("ygwan", StandardCharsets.UTF_8);
+        Cookie cookie = new Cookie("cookie",data);
+        cookie.setMaxAge(24 * 60 * 60); //초단위
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
 }
 
-
-// 6. ResponseBody의 의미를 알아세요. RestController, Controller의 차이
+// 6. RequestBody, ResponseBody의 의미를 알아세요. RestController, Controller의 차이
 
 // 7. 리다이렉션, Forward을 다루는 방법을 공부하세요. (redirect와 forward의 차이를 공부해봐바)
 
 // 8. 쿠키 값을 다루는 방법을 공부하세요. (@Cookie)
 
 // 9. 세션을 다루는 방법을 공부하세요. (@Session)
-
-// 10. RequestBody, ResponseBody를 구글링해봐요. 안써도 되니까 읽어만 봐.
