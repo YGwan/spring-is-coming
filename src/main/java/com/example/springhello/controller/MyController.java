@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -57,7 +59,7 @@ public class MyController {
         return n1 + n2;
     }
 
-   // 7. GET Mapping 의 hi로 리다이렉트 시켜서 hi를 반환하도록 해보세요;.
+    // 7. GET Mapping 의 hi로 리다이렉트 시켜서 hi를 반환하도록 해보세요;.
     @GetMapping("/redirect")
     public String redirectToHi() {
         return "redirect:/hi";
@@ -69,23 +71,42 @@ public class MyController {
     }
 
     @GetMapping("/view/hello")
-    public String viewHello(){
+    public String viewHello() {
         return "/hello";
     }
 
     @GetMapping("/view/thymeleaf/sample")
     public String thymeleafHello(Model model) {
-        model.addAttribute("hello","서버에서 보내준 값입니다");
+        model.addAttribute("hello", "서버에서 보내준 값입니다");
         return "/thymeleaf_sample";
     }
 
     @GetMapping("/cookie")
-    public void cookie(HttpServletResponse response) {
-        String data = URLEncoder.encode("ygwan", StandardCharsets.UTF_8);
-        Cookie cookie = new Cookie("cookie",data);
+    @ResponseBody
+    public String cookie(HttpServletResponse response) {
+        String data = URLEncoder.encode("YGwan", StandardCharsets.UTF_8);
+        Cookie cookie = new Cookie("cookie", data);
         cookie.setMaxAge(24 * 60 * 60); //초단위
         cookie.setPath("/");
         response.addCookie(cookie);
+        return "cookie";
+    }
+
+    @GetMapping("/cookie/load")
+    @ResponseBody
+    public String loadCookie(@CookieValue(value = "cookie") String cookie) {
+        System.out.println(cookie);
+        return cookie;
+    }
+
+    @GetMapping("/cookie/delete")
+    @ResponseBody
+    public String delCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie(("cookie"),null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return "cookie";
     }
 }
 
