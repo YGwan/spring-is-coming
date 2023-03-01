@@ -2,6 +2,7 @@ package com.example.springhello.controller;
 
 import com.example.springhello.utils.SearchParam;
 import com.example.springhello.utils.Sex;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class MyController {
     // hi를 출력하는 메서드를 정의하세요.
     @ResponseBody
     @PostMapping("/post")
-    public String postPrint(@RequestBody SearchParam searchParam) {
+    public String postPrint(@ModelAttribute SearchParam searchParam) {
         return searchParam.getHi();
     }
 
@@ -101,25 +102,38 @@ public class MyController {
 
     @GetMapping("/cookie/delete")
     @ResponseBody
-    public String delCookie(HttpServletResponse response) {
+    public String delCookie(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getSession().getId();
+        id = id.substring(0, id.length()-1) + "A";
         Cookie cookie = new Cookie(("cookie"),null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
+        response.addCookie(new Cookie("JSESSIONID", null));
         response.addCookie(cookie);
+        response.addCookie(new Cookie("JSESSIONID", id));
         return "cookie";
     }
 
     @GetMapping("/session")
     @ResponseBody
     public String sessionEx(HttpSession session) {
-        session.setAttribute("name", "ygwan");
+        session.setAttribute("A", "ygwan");
+        session.setAttribute("B", "ygwan");
+        session.setAttribute("C", "ygwan");
+        return "session";
+    }
+
+    @GetMapping("/session/add")
+    @ResponseBody
+    public String sessionAdd(HttpSession session) {
+        session.setAttribute("D", "ygwan");
         return "session";
     }
 
     @GetMapping("/session/load")
     @ResponseBody
     public String loadSession(HttpSession session) {
-        return (String)session.getAttribute("name");
+        return (String)session.getAttribute("A");
     }
 
     @GetMapping("/session/delete")
@@ -128,12 +142,27 @@ public class MyController {
         session.removeAttribute("name");
         return "session";
     }
+
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @GetMapping("status/400")
+    public String say302(HttpServletResponse response) {
+        return String.valueOf(response.getStatus());
+        // 이 요청은 400 status를 반환하세요.
+    }
 }
 
 // 6. RequestBody, ResponseBody의 의미를 알아세요. RestController, Controller의 차이
+
+// 6-1 ModelAttribute
 
 // 7. 리다이렉션, Forward을 다루는 방법을 공부하세요. (redirect와 forward의 차이를 공부해봐바)
 
 // 8. 쿠키 값을 다루는 방법을 공부하세요. (@Cookie)
 
 // 9. 세션을 다루는 방법을 공부하세요. (@Session)
+
+// 10. HTTP STATUS 를 반환하는 방법을 공부하세요.
+
+// 11. ResponseEntity를 사용해보시요
+
