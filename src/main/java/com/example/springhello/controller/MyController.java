@@ -2,7 +2,9 @@ package com.example.springhello.controller;
 
 import com.example.springhello.utils.SearchParam;
 import com.example.springhello.utils.Sex;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -146,9 +148,23 @@ public class MyController {
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @GetMapping("status/400")
-    public String say302(HttpServletResponse response) {
+    public String say400(HttpServletResponse response) {
         return String.valueOf(response.getStatus());
         // 이 요청은 400 status를 반환하세요.
+    }
+
+    @ResponseBody
+    @GetMapping("status/200")
+    public ResponseEntity<?> say300() {
+        // 이 요청은 200 status를 반환하세요.
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping("/handle")
+    public ResponseEntity<String> handle() {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("MyResponseHeader", "MyValue");
+        return new ResponseEntity<>("Hello World", responseHeaders, HttpStatus.CREATED);
     }
 }
 
