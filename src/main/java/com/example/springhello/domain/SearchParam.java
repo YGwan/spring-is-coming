@@ -1,4 +1,4 @@
-package com.example.springhello.utils;
+package com.example.springhello.domain;
 
 
 public class SearchParam {

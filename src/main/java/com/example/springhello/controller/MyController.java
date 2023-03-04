@@ -1,7 +1,7 @@
 package com.example.springhello.controller;
 
-import com.example.springhello.utils.SearchParam;
-import com.example.springhello.utils.Sex;
+import com.example.springhello.domain.SearchParam;
+import com.example.springhello.domain.Sex;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,8 @@ import java.nio.charset.StandardCharsets;
 
 @Controller
 public class MyController {
+
+    private int count = 0;
 
     @GetMapping("/hi")
     @ResponseBody
@@ -50,7 +52,7 @@ public class MyController {
     // hi를 출력하는 메서드를 정의하세요.
     @ResponseBody
     @PostMapping("/post")
-    public String postPrint(@ModelAttribute SearchParam searchParam) {
+    public String postPrint(@RequestParam SearchParam searchParam) {
         return searchParam.getHi();
     }
 
@@ -60,6 +62,13 @@ public class MyController {
     @PostMapping("/add/{숫자1}/{숫자2}")
     public int addPrint(@PathVariable("숫자1") int n1, @PathVariable("숫자2") int n2) {
         return n1 + n2;
+    }
+
+    // 5. My2Controller를 정의하고 방문 횟수를 Count하여 출력하는 메서드를 정의하세요.
+    @GetMapping("/count")
+    public String count() {
+        count++;
+        return String.valueOf(count);
     }
 
     // 7. GET Mapping 의 hi로 리다이렉트 시켜서 hi를 반환하도록 해보세요;.
@@ -106,8 +115,8 @@ public class MyController {
     @ResponseBody
     public String delCookie(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getSession().getId();
-        id = id.substring(0, id.length()-1) + "A";
-        Cookie cookie = new Cookie(("cookie"),null);
+        id = id.substring(0, id.length() - 1) + "A";
+        Cookie cookie = new Cookie(("cookie"), null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(new Cookie("JSESSIONID", null));
@@ -135,7 +144,7 @@ public class MyController {
     @GetMapping("/session/load")
     @ResponseBody
     public String loadSession(HttpSession session) {
-        return (String)session.getAttribute("A");
+        return (String) session.getAttribute("A");
     }
 
     @GetMapping("/session/delete")

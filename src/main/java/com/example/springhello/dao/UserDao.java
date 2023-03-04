@@ -1,4 +1,6 @@
-package com.example.springhello.repository;
+package com.example.springhello.dao;
+
+import com.example.springhello.domain.User;
 
 import java.sql.*;
 
@@ -6,8 +8,12 @@ public class UserDao {
 
     private final Connection conn;
 
-    public UserDao(Connection conn) {
+    private UserDao(Connection conn) {
         this.conn = conn;
+    }
+
+    public static UserDao connect(Connection conn) {
+        return new UserDao(conn);
     }
 
     public User selectById(Long id) throws SQLException {
