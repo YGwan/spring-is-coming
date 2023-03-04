@@ -1,6 +1,6 @@
-package com.example.springhello.dao;
+package com.example.jdbc.dao;
 
-import com.example.springhello.domain.User;
+import com.example.jdbc.entity.User;
 
 import java.sql.*;
 

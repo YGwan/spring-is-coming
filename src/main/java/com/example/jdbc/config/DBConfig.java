@@ -1,4 +1,4 @@
-package com.example.springhello.config;
+package com.example.jdbc.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

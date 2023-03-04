@@ -1,6 +1,5 @@
 package com.example.springhello.domain;
 
-
 public class SearchParam {
 
     private String hi;

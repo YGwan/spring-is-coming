@@ -1,8 +1,8 @@
-package com.example.springhello;
+package com.example.jdbc;
 
-import com.example.springhello.config.DBConfig;
-import com.example.springhello.dao.UserDao;
-import com.example.springhello.domain.User;
+import com.example.jdbc.config.DBConfig;
+import com.example.jdbc.dao.UserDao;
+import com.example.jdbc.entity.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
