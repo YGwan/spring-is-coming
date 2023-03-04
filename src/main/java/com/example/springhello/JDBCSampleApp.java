@@ -1,32 +1,26 @@
 package com.example.springhello;
 
 import com.example.springhello.repository.User;
-import com.example.springhello.repository.Users;
+import com.example.springhello.repository.UserDao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 public class JDBCSampleApp {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
-        Users users = new Users();
-        User user = new User(1L, "ygwan", 25);
-        users.insert(user);
-
-        try (
-                Connection conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/YGWAN",
-                        "root",
-                        "0000"
-                );
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery( "SELECT * FROM PERSON")
-//                int a = stmt.executeUpdate("INSERT INTO PERSON VALUES (1,'YGWAN',26)");
-                ) {
-            while (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
+        try {
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/YGWAN",
+                    "root",
+                    "0000"
+            );
+            UserDao userDao = new UserDao(conn);
+            userDao.updateById(2L, new User(2L, "jinhena", 27));
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

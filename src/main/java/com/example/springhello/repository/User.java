@@ -2,9 +2,9 @@ package com.example.springhello.repository;
 
 public class User {
 
-   Long id;
-   String name;
-   Integer age;
+   private Long id;
+   private String name;
+   private Integer age;
 
     public User(Long id, String name, Integer age) {
         this.id = id;
