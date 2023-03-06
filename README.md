@@ -4,8 +4,6 @@
 
 ## Spring 공부 순서
 
-<br>
-
 ### DB 공부
 
 1. JDBC
