@@ -55,8 +55,15 @@ public class JdbcTemplateService {
                 "UPDATE PERSON SET ID = ? WHERE NAME = ?",
                 id, user.getName()
         );
-
         return new User(id, user.getName(), user.getAge());
+    }
+
+    public Long deleteUser(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM PERSON WHERE id = ?",
+                id
+        );
+        return id;
     }
 }
 

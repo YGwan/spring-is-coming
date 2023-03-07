@@ -61,8 +61,7 @@ public class UserController {
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long id) {
-        // 유저를 제거하시고 해당 유저의 아이디를 반환하세요.
-        return null;
+        return ResponseEntity.ok(jdbcTemplateService.deleteUser(id));
     }
 }
 
