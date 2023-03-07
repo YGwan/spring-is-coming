@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 public class JdbcTemplateService {
 
-    private JdbcTemplate jdbcTemplate;
-    private UserRowMapper userRowMapper = new UserRowMapper();
+    private final JdbcTemplate jdbcTemplate;
+    private final UserRowMapper userRowMapper = new UserRowMapper();
 
     public JdbcTemplateService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -34,6 +34,13 @@ public class JdbcTemplateService {
         return users;
     }
 
+    public Long setUser(User user) {
+        jdbcTemplate.update(
+                "INSERT INTO PERSON VALUES(?,?,?)",
+                user.getId(), user.getName(), user.getAge()
+        );
+        return user.getId();
+    }
 }
 
 class UserRowMapper implements RowMapper<User> {
