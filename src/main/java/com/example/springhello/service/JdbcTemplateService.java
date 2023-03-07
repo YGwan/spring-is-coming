@@ -34,12 +34,29 @@ public class JdbcTemplateService {
         return users;
     }
 
-    public Long setUser(User user) {
+    public Long insertUser(User user) {
         jdbcTemplate.update(
                 "INSERT INTO PERSON VALUES(?,?,?)",
                 user.getId(), user.getName(), user.getAge()
         );
         return user.getId();
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = jdbcTemplate.query(
+                "SELECT * FROM PERSON",
+                userRowMapper
+                );
+        return users;
+    }
+
+    public User updateUserID(Long id, User user) {
+        jdbcTemplate.update(
+                "UPDATE PERSON SET ID = ? WHERE NAME = ?",
+                id, user.getName()
+        );
+
+        return new User(id, user.getName(), user.getAge());
     }
 }
 

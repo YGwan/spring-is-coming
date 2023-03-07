@@ -36,7 +36,7 @@ public class UserController {
     public ResponseEntity<String> upCount(@RequestBody User user) {
         // user 정보를 request body에 담고 이를 받아 db에 넣으세요.
         // 리턴은 유저 아이디를 반환하세요.
-        Long newID = jdbcTemplateService.setUser(
+        Long newID = jdbcTemplateService.insertUser(
                 new User(
                         user.getId(),
                         user.getName(),
@@ -48,14 +48,15 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> userAll() {
         // 모든 유저를 반환하세요.
-        return null;
+        List<User> users = jdbcTemplateService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         // 유저 정보를 request body에 담고 해당 id의 정보를 수정하세요.
-        User user = jdbcTemplateService.getUser(id);
-        return ResponseEntity.ok(user);
+        User newUser = jdbcTemplateService.updateUserID(id, user);
+        return ResponseEntity.ok(newUser);
     }
 
     @DeleteMapping("/user/{id}")
