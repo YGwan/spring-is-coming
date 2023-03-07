@@ -21,9 +21,15 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<List<User>> usersInfo(@PathVariable Long id) {
-        List<User> user = jdbcTemplateService.getUsers(id);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<String> usersInfo(@PathVariable Long id) {
+        List<User> users = jdbcTemplateService.getUsers(id);
+        StringBuilder output = new StringBuilder();
+        for(User user : users) {
+            output.append("id : ").append(user.getId());
+            output.append(", name : ").append(user.getName());
+            output.append(", age : ").append(user.getAge());
+        }
+        return ResponseEntity.ok(output.toString());
     }
 
     @PostMapping("/user")
