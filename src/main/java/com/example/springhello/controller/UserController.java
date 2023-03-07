@@ -20,6 +20,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<List<User>> usersInfo(@PathVariable Long id) {
+        List<User> user = jdbcTemplateService.getUsers(id);
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping("/user")
     public ResponseEntity<String> upCount() {
         // user 정보를 request body에 담고 이를 받아 db에 넣으세요.

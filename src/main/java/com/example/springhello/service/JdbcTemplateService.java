@@ -3,13 +3,11 @@ package com.example.springhello.service;
 import com.example.springhello.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Service
 public class JdbcTemplateService {
@@ -27,6 +25,15 @@ public class JdbcTemplateService {
                 userRowMapper,
                 id);
     }
+
+    public List<User> getUsers(Long id) {
+        List<User> users = jdbcTemplate.query(
+                "SELECT * FROM PERSON WHERE ID=?",
+                userRowMapper,
+                id);
+        return users;
+    }
+
 }
 
 class UserRowMapper implements RowMapper<User> {
@@ -38,5 +45,5 @@ class UserRowMapper implements RowMapper<User> {
         user.setName(rs.getString("name"));
         user.setAge(rs.getInt("age"));
         return user;
-    };
+    }
 }
