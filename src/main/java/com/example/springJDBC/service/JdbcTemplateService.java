@@ -1,6 +1,6 @@
-package com.example.springDataJDBC.service;
+package com.example.springJDBC.service;
 
-import com.example.springDataJDBC.entity.User;
+import com.example.springJDBC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;

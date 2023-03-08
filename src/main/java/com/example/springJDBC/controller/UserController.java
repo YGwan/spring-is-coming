@@ -1,7 +1,7 @@
-package com.example.springDataJDBC.controller;
+package com.example.springJDBC.controller;
 
-import com.example.springDataJDBC.entity.User;
-import com.example.springDataJDBC.service.JdbcTemplateService;
+import com.example.springJDBC.entity.User;
+import com.example.springJDBC.service.JdbcTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
