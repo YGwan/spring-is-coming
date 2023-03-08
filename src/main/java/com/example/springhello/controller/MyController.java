@@ -190,4 +190,3 @@ public class MyController {
 // 10. HTTP STATUS 를 반환하는 방법을 공부하세요.
 
 // 11. ResponseEntity를 사용해보시요
-

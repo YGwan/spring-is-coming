@@ -34,12 +34,12 @@ public class JdbcTemplateService {
         return users;
     }
 
-    public Long insertUser(User user) {
+    public User insertUser(Long id, String name, int age) {
         jdbcTemplate.update(
                 "INSERT INTO PERSON VALUES(?,?,?)",
-                user.getId(), user.getName(), user.getAge()
+                id, name, age
         );
-        return user.getId();
+        return new User(id, name, age);
     }
 
     public List<User> getAllUsers() {
