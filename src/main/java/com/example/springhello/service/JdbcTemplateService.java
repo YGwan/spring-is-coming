@@ -1,6 +1,6 @@
-package com.example.springDataJDBC.service;
+package com.example.springhello.service;
 
-import com.example.springDataJDBC.domain.User;
+import com.example.springhello.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;

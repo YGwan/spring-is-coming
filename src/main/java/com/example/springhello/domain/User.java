@@ -1,4 +1,4 @@
-package com.example.springDataJDBC.domain;
+package com.example.springhello.domain;
 
 public class User {
 
