@@ -1,6 +1,6 @@
 package com.example.springDataJDBC.controller;
 
-import com.example.springDataJDBC.domain.User;
+import com.example.springDataJDBC.entity.User;
 import com.example.springDataJDBC.service.JdbcTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

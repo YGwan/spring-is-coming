@@ -1,6 +1,6 @@
 package com.example.springDataJDBC.service;
 
-import com.example.springDataJDBC.domain.User;
+import com.example.springDataJDBC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -21,14 +21,14 @@ public class JdbcTemplateService {
 
     public User getUser(Long id) {
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM PERSON WHERE ID=?",
+                "SELECT * FROM USER WHERE ID=?",
                 userRowMapper,
                 id);
     }
 
     public List<User> getUsers(Long id) {
         List<User> users = jdbcTemplate.query(
-                "SELECT * FROM PERSON WHERE ID=?",
+                "SELECT * FROM USER WHERE ID=?",
                 userRowMapper,
                 id);
         return users;
@@ -36,7 +36,7 @@ public class JdbcTemplateService {
 
     public User insertUser(Long id, String name, int age) {
         jdbcTemplate.update(
-                "INSERT INTO PERSON VALUES(?,?,?)",
+                "INSERT INTO USER VALUES(?,?,?)",
                 id, name, age
         );
         return new User(id, name, age);
@@ -44,7 +44,7 @@ public class JdbcTemplateService {
 
     public List<User> getAllUsers() {
         List<User> users = jdbcTemplate.query(
-                "SELECT * FROM PERSON",
+                "SELECT * FROM USER",
                 userRowMapper
                 );
         return users;
@@ -52,7 +52,7 @@ public class JdbcTemplateService {
 
     public User updateUserID(Long id, User user) {
         jdbcTemplate.update(
-                "UPDATE PERSON SET ID = ? WHERE NAME = ?",
+                "UPDATE USER SET ID = ? WHERE NAME = ?",
                 id, user.getName()
         );
         return new User(id, user.getName(), user.getAge());
@@ -60,7 +60,7 @@ public class JdbcTemplateService {
 
     public Long deleteUser(Long id) {
         jdbcTemplate.update(
-                "DELETE FROM PERSON WHERE id = ?",
+                "DELETE FROM USER WHERE id = ?",
                 id
         );
         return id;
