@@ -5,6 +5,8 @@ public class User {
    private Long id;
    private String name;
    private Integer age;
+   private String phoneNumber;
+   // TODO : 공지) 사용자 정보로 휴대폰 번호가 추가되었습니다.
 
     public User() {
     }

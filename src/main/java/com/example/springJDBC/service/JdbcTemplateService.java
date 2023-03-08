@@ -15,6 +15,9 @@ public class JdbcTemplateService {
     private final JdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper = new UserRowMapper();
 
+    // TODO 2 : Controller의 todo2와 더불어 jdbcTemplate이 어떻게 주입될 수 있었는지 고민해보세요.
+    //  만약 스프링의 의존성 주입이라면 앞선 세가지 방식 중 어떤 방식에 해당되는 주입 방식인가요.
+
     public JdbcTemplateService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
