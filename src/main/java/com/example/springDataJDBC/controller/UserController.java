@@ -1,7 +1,7 @@
-package com.example.springhello.controller;
+package com.example.springDataJDBC.controller;
 
-import com.example.springhello.domain.User;
-import com.example.springhello.service.JdbcTemplateService;
+import com.example.springDataJDBC.domain.User;
+import com.example.springDataJDBC.service.JdbcTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
