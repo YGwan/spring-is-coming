@@ -27,35 +27,34 @@ public class JdbcTemplateService {
     }
 
     public List<User> getUsers(Long id) {
-        List<User> users = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 "SELECT * FROM USER WHERE ID=?",
                 userRowMapper,
                 id);
-        return users;
     }
 
-    public User insertUser(Long id, String name, int age) {
+    public Long insertUser(User user) {
         jdbcTemplate.update(
                 "INSERT INTO USER VALUES(?,?,?)",
-                id, name, age
+                user.getId(), user.getName(), user.getAge()
         );
-        return new User(id, name, age);
+        return user.getId();
     }
 
     public List<User> getAllUsers() {
         List<User> users = jdbcTemplate.query(
                 "SELECT * FROM USER",
                 userRowMapper
-                );
+        );
         return users;
     }
 
-    public User updateUserID(Long id, User user) {
+    public User updateUserByID(User user) {
         jdbcTemplate.update(
-                "UPDATE USER SET ID = ? WHERE NAME = ?",
-                id, user.getName()
+                "UPDATE USER SET NAME = ?, AGE = ?  WHERE ID = ?",
+                user.getName(), user.getAge(), user.getId()
         );
-        return new User(id, user.getName(), user.getAge());
+        return new User(user.getId(), user.getName(), user.getAge());
     }
 
     public Long deleteUser(Long id) {
