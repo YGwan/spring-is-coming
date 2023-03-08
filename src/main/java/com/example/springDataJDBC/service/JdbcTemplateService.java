@@ -1,6 +1,6 @@
-package com.example.springhello.service;
+package com.example.springDataJDBC.service;
 
-import com.example.springhello.domain.User;
+import com.example.springDataJDBC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -21,22 +21,21 @@ public class JdbcTemplateService {
 
     public User getUser(Long id) {
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM PERSON WHERE ID=?",
+                "SELECT * FROM USER WHERE ID=?",
                 userRowMapper,
                 id);
     }
 
     public List<User> getUsers(Long id) {
-        List<User> users = jdbcTemplate.query(
-                "SELECT * FROM PERSON WHERE ID=?",
+        return jdbcTemplate.query(
+                "SELECT * FROM USER WHERE ID=?",
                 userRowMapper,
                 id);
-        return users;
     }
 
     public Long insertUser(User user) {
         jdbcTemplate.update(
-                "INSERT INTO PERSON VALUES(?,?,?)",
+                "INSERT INTO USER VALUES(?,?,?)",
                 user.getId(), user.getName(), user.getAge()
         );
         return user.getId();
@@ -44,23 +43,23 @@ public class JdbcTemplateService {
 
     public List<User> getAllUsers() {
         List<User> users = jdbcTemplate.query(
-                "SELECT * FROM PERSON",
+                "SELECT * FROM USER",
                 userRowMapper
-                );
+        );
         return users;
     }
 
-    public User updateUserID(Long id, User user) {
+    public User updateUserByID(User user) {
         jdbcTemplate.update(
-                "UPDATE PERSON SET ID = ? WHERE NAME = ?",
-                id, user.getName()
+                "UPDATE USER SET NAME = ?, AGE = ?  WHERE ID = ?",
+                user.getName(), user.getAge(), user.getId()
         );
-        return new User(id, user.getName(), user.getAge());
+        return new User(user.getId(), user.getName(), user.getAge());
     }
 
     public Long deleteUser(Long id) {
         jdbcTemplate.update(
-                "DELETE FROM PERSON WHERE id = ?",
+                "DELETE FROM USER WHERE id = ?",
                 id
         );
         return id;

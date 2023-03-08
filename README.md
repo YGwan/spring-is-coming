@@ -1,8 +1,10 @@
 # Spring-is-Comming
 
+#### Spring framework를 다루기 위한 기본부터 시작하기
+
 <br>
 
-## Spring 공부 순서
+# Spring 공부 순서
 
 ### DB 공부
 
