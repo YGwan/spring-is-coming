@@ -9,7 +9,8 @@
 ### DB 공부
 
 1. JDBC
-2. Spring Data JDBC
+2. Spring JDBC
 3. SQL mapper
-4. JPA
-5. Spring Data JPA
+4. Spring data JDBC
+5. JPA
+6. Spring Data JPA
