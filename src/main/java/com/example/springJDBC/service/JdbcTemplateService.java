@@ -42,11 +42,10 @@ public class JdbcTemplateService {
     }
 
     public List<User> getAllUsers() {
-        List<User> users = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 "SELECT * FROM USER",
                 userRowMapper
         );
-        return users;
     }
 
     public User updateUserByID(User user) {

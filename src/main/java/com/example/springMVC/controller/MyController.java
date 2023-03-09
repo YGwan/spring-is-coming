@@ -1,7 +1,7 @@
-package com.example.springhello.controller;
+package com.example.springMVC.controller;
 
-import com.example.springhello.domain.SearchParam;
-import com.example.springhello.domain.Sex;
+import com.example.springMVC.domain.SearchParam;
+import com.example.springMVC.domain.Sex;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
