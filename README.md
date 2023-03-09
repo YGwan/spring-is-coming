@@ -1,4 +1,4 @@
-# Spring-is-Comming
+# Spring-Is-Comming
 
 #### Spring framework를 다루기 위한 기본부터 시작하기
 
@@ -14,7 +14,7 @@
 
 1. JDBC
 2. Spring JDBC
-3. SQL mapper
-4. Spring data JDBC
+3. SQL Mapper
+4. Spring Data JDBC
 5. JPA
 6. Spring Data JPA
