@@ -1,5 +1,7 @@
 package com.example.springJDBC.controller;
 
+import com.example.springJDBC.dto.UserNameInfoResponse;
+import com.example.springJDBC.dto.UsersInfoResponse;
 import com.example.springJDBC.entity.User;
 import com.example.springJDBC.service.JdbcTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    // TODO 1 : @Autowired의 의미를 알아오세요. - clear
+    // TODO 1 : @Autowired의 의미를 알아오세요.
     // TODO 2 : Spring의 의존성 주입 방법 3가지를 조사하세요. 그리고 그 중 가장 마음에 드는 방식을 본인 근거와 함께 골라오세요.
 
     private final JdbcTemplateService jdbcTemplateService;
@@ -27,15 +29,9 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<String> usersInfo(@PathVariable Long id) {
+    public ResponseEntity<UsersInfoResponse> usersInfo(@PathVariable Long id) {
         List<User> users = jdbcTemplateService.getUsers(id);
-        StringBuilder output = new StringBuilder();
-        for (User user : users) {
-            output.append("id : ").append(user.getId());
-            output.append(", name : ").append(user.getName());
-            output.append(", age : ").append(user.getAge());
-        }
-
+        return ResponseEntity.ok(new UsersInfoResponse(users));
         // TODO 3 : User 정보를 응답해야할 때마다 매번 StringBuilder로 정보를 만들어야할까요?
         //  만약 그렇다고 하면 이 코드가 매번 중복될 것 같은데 불편하지 않을까요? 이 불편함을 해결해보세요.
 
@@ -43,8 +39,12 @@ public class UserController {
         //  예를들면 갑자기 사용자가 User 정보의 name 부분을 username으로 바꾸고 싶다고 하면 어떻게 할까요.
         //  단, 그렇다고 User class의 name 필드 자체가 바뀐다면 DB랑 컬럼명도 맞춰야 하고 개발자들끼리 용어에도 문제가 될거에요.
         //  따라서 User class는 변경되지 않도록 하면서도 사용자가 원하는대로 username으로 이름 정보를 응답할 수 있도록 고민해보세요.
+    }
 
-        return ResponseEntity.ok(output.toString());
+    @GetMapping("userName/{id}")
+    public ResponseEntity<UserNameInfoResponse> userNameInfo(@PathVariable Long id) {
+        User user = jdbcTemplateService.getUser(id);
+        return ResponseEntity.ok(new UserNameInfoResponse(user));
     }
 
     @PostMapping("/user")
