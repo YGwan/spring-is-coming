@@ -14,8 +14,9 @@ public class UserController {
     // TODO 1 : @Autowired의 의미를 알아오세요. - clear
     // TODO 2 : Spring의 의존성 주입 방법 3가지를 조사하세요. 그리고 그 중 가장 마음에 드는 방식을 본인 근거와 함께 골라오세요.
 
-    private JdbcTemplateService jdbcTemplateService;
+    private final JdbcTemplateService jdbcTemplateService;
 
+    @Autowired // 생략 가능
     public UserController(JdbcTemplateService jdbcTemplateService) {
         this.jdbcTemplateService = jdbcTemplateService;
     }
