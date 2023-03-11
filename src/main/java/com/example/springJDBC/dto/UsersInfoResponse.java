@@ -8,6 +8,9 @@ public class UsersInfoResponse {
 
     private String usersInfoOutput;
 
+    public UsersInfoResponse() {
+    }
+
     public UsersInfoResponse(List<User> users) {
         StringBuilder usersOutput = new StringBuilder();
         for(User user : users) {
