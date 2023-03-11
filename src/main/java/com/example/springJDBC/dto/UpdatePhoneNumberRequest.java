@@ -1,17 +1,16 @@
-package com.example.springJDBC.entity;
+package com.example.springJDBC.dto;
 
-public class User {
+public class UpdatePhoneNumberRequest {
 
-   private Long id;
-   private String name;
-   private Integer age;
-   private String phoneNumber;
-   // TODO : 공지) 사용자 정보로 휴대폰 번호가 추가되었습니다.
+    private Long id;
+    private String name;
+    private Integer age;
+    private String phoneNumber;
 
-    public User() {
+    public UpdatePhoneNumberRequest() {
     }
 
-    public User(Long id, String name, Integer age, String phoneNumber) {
+    public UpdatePhoneNumberRequest(Long id, String name, Integer age, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.age = age;

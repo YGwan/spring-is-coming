@@ -16,7 +16,8 @@ public class UsersInfoResponse {
         for(User user : users) {
             usersOutput.append("id is ").append(user.getId()).append(", ");
             usersOutput.append("name is ").append(user.getName()).append(", ");
-            usersOutput.append("age is ").append(user.getAge()).append(" ");
+            usersOutput.append("age is ").append(user.getAge()).append(", ");
+            usersOutput.append("phoneNumber is ").append(user.getPhoneNumber()).append(" ");
         }
         this.usersInfoOutput = usersOutput.toString();
     }

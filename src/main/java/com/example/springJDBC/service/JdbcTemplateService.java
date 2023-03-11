@@ -1,5 +1,6 @@
 package com.example.springJDBC.service;
 
+import com.example.springJDBC.dto.UpdatePhoneNumberRequest;
 import com.example.springJDBC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class JdbcTemplateService {
@@ -39,8 +41,8 @@ public class JdbcTemplateService {
 
     public Long insertUser(User user) {
         jdbcTemplate.update(
-                "INSERT INTO USER VALUES(?,?,?)",
-                user.getId(), user.getName(), user.getAge()
+                "INSERT INTO USER VALUES(?,?,?,?)",
+                user.getId(), user.getName(), user.getAge(), user.getPhoneNumber()
         );
         return user.getId();
     }
@@ -55,10 +57,10 @@ public class JdbcTemplateService {
 
     public User updateUserByID(User user) {
         jdbcTemplate.update(
-                "UPDATE USER SET NAME = ?, AGE = ?  WHERE ID = ?",
-                user.getName(), user.getAge(), user.getId()
+                "UPDATE USER SET NAME = ?, AGE = ?, PHONENUMBER = ?  WHERE ID = ?",
+                user.getName(), user.getAge(), user.getPhoneNumber(), user.getId()
         );
-        return new User(user.getId(), user.getName(), user.getAge());
+        return new User(user.getId(), user.getName(), user.getAge(), user.getPhoneNumber());
     }
 
     public Long deleteUser(Long id) {
@@ -67,6 +69,41 @@ public class JdbcTemplateService {
                 id
         );
         return id;
+    }
+
+    public User updatePhoneNumberByNameAndAge(UpdatePhoneNumberRequest updatePhoneNumberRequest) {
+
+        final Long targetId = updatePhoneNumberRequest.getId();
+        final String targetName = updatePhoneNumberRequest.getName();
+        final int targetAge = updatePhoneNumberRequest.getAge();
+        final String targetPhoneNumber = updatePhoneNumberRequest.getPhoneNumber();
+
+        if (!targetName.equals(findNameByID(targetId)) || (targetAge != findAgeByID(targetId))) {
+            throw new NoSuchElementException("기존 사용자 정보와 맞지 않습니다.");
+        }
+
+        if (targetPhoneNumber.equals(findPhoneNumberByID(targetId))) {
+            throw new NoSuchElementException("휴대폰 번호가 중복되었습니다.");
+        }
+
+        jdbcTemplate.update(
+                "UPDATE USER SET PHONENUMBER = ?  WHERE ID = ?",
+                updatePhoneNumberRequest.getPhoneNumber(), updatePhoneNumberRequest.getId()
+        );
+
+        return new User(targetId, targetName, targetAge,targetPhoneNumber);
+    }
+
+    private String findNameByID(Long id) {
+        return getUser(id).getName();
+    }
+
+    private int findAgeByID(Long id) {
+        return getUser(id).getAge();
+    }
+
+    private String findPhoneNumberByID(Long id) {
+        return getUser(id).getPhoneNumber();
     }
 }
 
@@ -78,6 +115,7 @@ class UserRowMapper implements RowMapper<User> {
         user.setId(rs.getLong("id"));
         user.setName(rs.getString("name"));
         user.setAge(rs.getInt("age"));
+        user.setPhoneNumber(rs.getString("phoneNumber"));
         return user;
     }
 }

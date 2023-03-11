@@ -1,5 +1,6 @@
 package com.example.springJDBC.controller;
 
+import com.example.springJDBC.dto.UpdatePhoneNumberRequest;
 import com.example.springJDBC.dto.UserNameInfoResponse;
 import com.example.springJDBC.dto.UsersInfoResponse;
 import com.example.springJDBC.entity.User;
@@ -68,8 +69,8 @@ public class UserController {
     //  예외 사항 1 ) 기존 사용자 정보가 맞지 않는 경우 예외를 발생합니다.
     //  예외 사항 2 ) 동일한 휴대폰 번호로 수정 요청을 할 수 없습니다.
     @PutMapping("/user/phoneNumber")
-    public ResponseEntity<User> updatePhoneNumber(Void yourSolution) {
-        return null;
+    public ResponseEntity<User> updatePhoneNumber(@RequestBody UpdatePhoneNumberRequest updatePhoneNumberRequest) {
+        return ResponseEntity.ok(jdbcTemplateService.updatePhoneNumberByNameAndAge(updatePhoneNumberRequest));
     }
 
     // TODO 6 : 사용자의 나이를 수정하는 API를 생성해보세요.
