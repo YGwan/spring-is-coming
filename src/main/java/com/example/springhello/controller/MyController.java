@@ -1,7 +1,7 @@
 package com.example.springhello.controller;
 
-import com.example.springhello.domain.SearchParam;
-import com.example.springhello.domain.Sex;
+import com.example.springhello.dto.HiRequest;
+import com.example.springhello.entity.Sex;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +52,8 @@ public class MyController {
     // hi를 출력하는 메서드를 정의하세요.
     @ResponseBody
     @PostMapping("/post")
-    public String postPrint(@RequestParam SearchParam searchParam) {
-        return searchParam.getHi();
+    public String postPrint(@RequestParam HiRequest hiRequest) {
+        return hiRequest.getHi();
     }
 
     // 4. PUT /add/{숫자1}/{숫자2}

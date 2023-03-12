@@ -1,6 +1,6 @@
-package com.example.springJDBC.dto;
+package com.example.springhello.dto;
 
-import com.example.springJDBC.entity.User;
+import com.example.springhello.entity.User;
 
 public class UpdateAgeResponse {
 

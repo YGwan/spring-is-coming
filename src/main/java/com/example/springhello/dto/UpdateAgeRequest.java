@@ -1,4 +1,4 @@
-package com.example.springJDBC.dto;
+package com.example.springhello.dto;
 
 public class UpdateAgeRequest {
 

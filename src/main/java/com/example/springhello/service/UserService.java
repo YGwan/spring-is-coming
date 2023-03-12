@@ -1,15 +1,15 @@
-package com.example.springJDBC.service;
+package com.example.springhello.service;
 
-import com.example.springJDBC.dao.UserDao;
-import com.example.springJDBC.dto.UpdateAgeRequest;
-import com.example.springJDBC.dto.UpdateAgeResponse;
-import com.example.springJDBC.dto.UpdatePhoneNumberRequest;
-import com.example.springJDBC.dto.UserResponse;
-import com.example.springJDBC.entity.User;
+import com.example.springhello.dao.UserDao;
+import com.example.springhello.dto.UpdateAgeRequest;
+import com.example.springhello.dto.UpdateAgeResponse;
+import com.example.springhello.dto.UpdatePhoneNumberRequest;
+import com.example.springhello.dto.UserResponse;
+import com.example.springhello.entity.User;
+import com.example.springhello.exception.UserException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
@@ -27,7 +27,7 @@ public class UserService {
         requestUser.validateEqualByNameAndAge(realUser);
 
         if (requestUser.getPhoneNumber().equals(realUser.getPhoneNumber())) {
-            throw new NoSuchElementException("휴대폰 번호가 중복되었습니다.");
+            throw new UserException("휴대폰 번호가 중복되었습니다.");
         }
         userDao.updatePhoneNumberById(request);
         return requestUser;

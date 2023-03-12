@@ -1,6 +1,6 @@
-package com.example.springhello.domain;
+package com.example.springhello.dto;
 
-public class SearchParam {
+public class HiRequest {
 
     private String hi;
 

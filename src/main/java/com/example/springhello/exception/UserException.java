@@ -1,4 +1,4 @@
-package com.example.springJDBC.entity;
+package com.example.springhello.exception;
 
 public class UserException extends IllegalArgumentException {
 

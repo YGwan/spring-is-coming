@@ -1,26 +1,28 @@
-package com.example.springJDBC.dto;
+package com.example.springhello.entity;
 
-import com.example.springJDBC.entity.User;
+import com.example.springhello.exception.UserException;
 
-public class UpdatePhoneNumberRequest {
+public class User {
 
     private Long id;
     private String name;
     private Integer age;
     private String phoneNumber;
 
-    public UpdatePhoneNumberRequest() {
+    public User() {
     }
 
-    public UpdatePhoneNumberRequest(Long id, String name, Integer age, String phoneNumber) {
+    public User(Long id, String name, Integer age, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
     }
 
-    public User toUser() {
-        return new User(id, name, age, phoneNumber);
+    public void validateEqualByNameAndAge(User realUser) {
+        if(!(realUser.getName().equals(this.name)) || !(realUser.getAge().equals(this.age))) {
+            throw new UserException("정보 불일치");
+        }
     }
 
     public Long getId() {
