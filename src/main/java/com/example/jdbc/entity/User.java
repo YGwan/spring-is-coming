@@ -2,9 +2,9 @@ package com.example.jdbc.entity;
 
 public class User {
 
-   private final Long id;
-   private final String name;
-   private final Integer age;
+    private final Long id;
+    private final String name;
+    private final Integer age;
 
     public User(Long id, String name, Integer age) {
         this.id = id;

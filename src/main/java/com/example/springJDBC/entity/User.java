@@ -49,4 +49,10 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public void validateEqualByNameAndAge(User realUser) {
+        if(!(realUser.getName().equals(this.name)) || !(realUser.getAge().equals(this.age))) {
+            throw new UserException("정보 불일치");
+        }
+    }
 }

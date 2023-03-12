@@ -7,25 +7,25 @@ import com.example.springJDBC.entity.User;
     -> 클래스 명이랑 필드 명이랑 같으면 안좋다.
  */
 
-public class UserNameInfoResponse {
+public class UsernameInfoResponse {
 
     private Long id;
-    private String userName;
+    private String username;
     private Integer age;
     private String phoneNumber;
 
-    public UserNameInfoResponse() {
+    public UsernameInfoResponse() {
     }
 
-    public UserNameInfoResponse(Long id, String userName, Integer age, String phoneNumber) {
+    public UsernameInfoResponse(Long id, String username, Integer age, String phoneNumber) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.age = age;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = "***-****-****";
     }
 
-    public UserNameInfoResponse(User user) {
-        this(user.getId(), user.getName(), user.getAge(), null);
+    public UsernameInfoResponse(User user) {
+        this(user.getId(), user.getName(), user.getAge(), user.getPhoneNumber());
     }
 
     public Long getId() {
@@ -36,16 +36,16 @@ public class UserNameInfoResponse {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getAge() {
@@ -54,9 +54,5 @@ public class UserNameInfoResponse {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

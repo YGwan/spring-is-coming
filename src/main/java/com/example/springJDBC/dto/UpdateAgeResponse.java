@@ -12,15 +12,15 @@ public class UpdateAgeResponse {
     public UpdateAgeResponse() {
     }
 
-    public UpdateAgeResponse(Long id, String userName, Integer age, String phoneNumber) {
+    public UpdateAgeResponse(Long id, String name, Integer age) {
         this.id = id;
-        this.name = userName;
+        this.name = name;
         this.age = age;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = "***-****-****";
     }
 
     public UpdateAgeResponse(User user) {
-        this(user.getId(), user.getName(), user.getAge(), user.getPhoneNumber());
+        this(user.getId(), user.getName(), user.getAge());
     }
 
     public Long getId() {

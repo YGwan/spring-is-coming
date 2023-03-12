@@ -1,28 +1,26 @@
-package com.example.springJDBC.service;
+package com.example.springJDBC.dao;
 
 import com.example.springJDBC.dto.UpdateAgeRequest;
+import com.example.springJDBC.dto.UpdateAgeResponse;
 import com.example.springJDBC.dto.UpdatePhoneNumberRequest;
 import com.example.springJDBC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-@Service
-public class JdbcTemplateService {
+@Component
+public class UserDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper = new UserRowMapper();
 
-
     // TODO 2 : Controller의 todo2와 더불어 jdbcTemplate이 어떻게 주입될 수 있었는지 고민해보세요.
     //  만약 스프링의 의존성 주입이라면 앞선 세가지 방식 중 어떤 방식에 해당되는 주입 방식인가요.
-
-    public JdbcTemplateService(JdbcTemplate jdbcTemplate) {
+    public UserDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -49,14 +47,13 @@ public class JdbcTemplateService {
     }
 
     public List<User> getAllUsers() {
-        List<User> users = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 "SELECT * FROM USER",
                 userRowMapper
         );
-        return users;
     }
 
-    public User updateUserByID(User user) {
+    public User updateUserById(User user) {
         jdbcTemplate.update(
                 "UPDATE USER SET NAME = ?, AGE = ?, PHONENUMBER = ?  WHERE ID = ?",
                 user.getName(), user.getAge(), user.getPhoneNumber(), user.getId()
@@ -64,48 +61,19 @@ public class JdbcTemplateService {
         return new User(user.getId(), user.getName(), user.getAge(), user.getPhoneNumber());
     }
 
-    public User updateAgeByID(UpdateAgeRequest updateAgeRequest) {
+    public UpdateAgeResponse updateAgeById(UpdateAgeRequest request) {
         jdbcTemplate.update(
                 "UPDATE USER SET AGE = ?  WHERE ID = ?",
-                updateAgeRequest.getAge(), updateAgeRequest.getId()
+                request.getAge(), request.getId()
         );
-        return new User(updateAgeRequest.getId(), findNameByID(updateAgeRequest.getId())
-                , updateAgeRequest.getAge(), "***-****-****");
+        return new UpdateAgeResponse(request.getId(), findNameById(request.getId()), request.getAge());
     }
 
-    public User updatePhoneNumberByNameAndAge(UpdatePhoneNumberRequest updatePhoneNumberRequest) {
-
-        final Long targetId = updatePhoneNumberRequest.getId();
-        final String targetName = updatePhoneNumberRequest.getName();
-        final int targetAge = updatePhoneNumberRequest.getAge();
-        final String targetPhoneNumber = updatePhoneNumberRequest.getPhoneNumber();
-
-        if (!targetName.equals(findNameByID(targetId)) || (targetAge != findAgeByID(targetId))) {
-            throw new NoSuchElementException("기존 사용자 정보와 맞지 않습니다.");
-        }
-
-        if (targetPhoneNumber.equals(findPhoneNumberByID(targetId))) {
-            throw new NoSuchElementException("휴대폰 번호가 중복되었습니다.");
-        }
-
-        jdbcTemplate.update(
-                "UPDATE USER SET PHONENUMBER = ?  WHERE ID = ?",
-                updatePhoneNumberRequest.getPhoneNumber(), updatePhoneNumberRequest.getId()
-        );
-
-        return new User(targetId, targetName, targetAge, targetPhoneNumber);
-    }
-
-    private String findNameByID(Long id) {
-        return getUser(id).getName();
-    }
-
-    private int findAgeByID(Long id) {
-        return getUser(id).getAge();
-    }
-
-    private String findPhoneNumberByID(Long id) {
-        return getUser(id).getPhoneNumber();
+    private String findNameById(Long id) {
+        return jdbcTemplate.queryForObject(
+                "SELECT NAME FROM USER WHERE ID=?",
+                String.class,
+                id);
     }
 
     public Long deleteUser(Long id) {
@@ -114,6 +82,13 @@ public class JdbcTemplateService {
                 id
         );
         return id;
+    }
+
+    public int updatePhoneNumberById(UpdatePhoneNumberRequest request) {
+        return jdbcTemplate.update(
+                "UPDATE USER SET PHONENUMBER = ?  WHERE ID = ?",
+                request.getPhoneNumber(), request.getId()
+        );
     }
 }
 

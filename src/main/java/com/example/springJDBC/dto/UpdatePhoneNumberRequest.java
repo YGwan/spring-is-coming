@@ -1,5 +1,7 @@
 package com.example.springJDBC.dto;
 
+import com.example.springJDBC.entity.User;
+
 public class UpdatePhoneNumberRequest {
 
     private Long id;
@@ -15,6 +17,10 @@ public class UpdatePhoneNumberRequest {
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User toUser() {
+        return new User(id, name, age, phoneNumber);
     }
 
     public Long getId() {
