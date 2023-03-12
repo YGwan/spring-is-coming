@@ -13,7 +13,7 @@ public class UsersInfoResponse {
 
     public UsersInfoResponse(List<User> users) {
         StringBuilder usersOutput = new StringBuilder();
-        for(User user : users) {
+        for (User user : users) {
             usersOutput.append("id is ").append(user.getId()).append(", ");
             usersOutput.append("name is ").append(user.getName()).append(", ");
             usersOutput.append("age is ").append(user.getAge()).append(", ");
