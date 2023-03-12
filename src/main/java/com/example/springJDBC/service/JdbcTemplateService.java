@@ -1,5 +1,6 @@
 package com.example.springJDBC.service;
 
+import com.example.springJDBC.dto.UpdateAgeRequest;
 import com.example.springJDBC.dto.UpdatePhoneNumberRequest;
 import com.example.springJDBC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -63,12 +64,13 @@ public class JdbcTemplateService {
         return new User(user.getId(), user.getName(), user.getAge(), user.getPhoneNumber());
     }
 
-    public Long deleteUser(Long id) {
+    public User updateAgeByID(UpdateAgeRequest updateAgeRequest) {
         jdbcTemplate.update(
-                "DELETE FROM USER WHERE id = ?",
-                id
+                "UPDATE USER SET AGE = ?  WHERE ID = ?",
+                updateAgeRequest.getAge(), updateAgeRequest.getId()
         );
-        return id;
+        return new User(updateAgeRequest.getId(), findNameByID(updateAgeRequest.getId())
+                , updateAgeRequest.getAge(), "***-****-****");
     }
 
     public User updatePhoneNumberByNameAndAge(UpdatePhoneNumberRequest updatePhoneNumberRequest) {
@@ -91,7 +93,7 @@ public class JdbcTemplateService {
                 updatePhoneNumberRequest.getPhoneNumber(), updatePhoneNumberRequest.getId()
         );
 
-        return new User(targetId, targetName, targetAge,targetPhoneNumber);
+        return new User(targetId, targetName, targetAge, targetPhoneNumber);
     }
 
     private String findNameByID(Long id) {
@@ -104,6 +106,14 @@ public class JdbcTemplateService {
 
     private String findPhoneNumberByID(Long id) {
         return getUser(id).getPhoneNumber();
+    }
+
+    public Long deleteUser(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM USER WHERE id = ?",
+                id
+        );
+        return id;
     }
 }
 

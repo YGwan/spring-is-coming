@@ -1,8 +1,6 @@
 package com.example.springJDBC.controller;
 
-import com.example.springJDBC.dto.UpdatePhoneNumberRequest;
-import com.example.springJDBC.dto.UserNameInfoResponse;
-import com.example.springJDBC.dto.UsersInfoResponse;
+import com.example.springJDBC.dto.*;
 import com.example.springJDBC.entity.User;
 import com.example.springJDBC.service.JdbcTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +75,9 @@ public class UserController {
     //  이때 사용자 측에서는 사용자의 id, age만을 요청 바디로 전달합니다.
     //  특이 사항 ) 휴대폰 번호는 중요한 개인정보입니다. 나이 수정 요청의 응답으로 휴대폰 번호 필드가 노출되지 않도록 주의하세요.
     @PutMapping("/user/age")
-    public ResponseEntity<User> updateAge(Void yourSolution) {
-        return null;
+    public ResponseEntity<UpdateAgeResponse> updateAge(@RequestBody UpdateAgeRequest updateAgeRequest) {
+        User user = jdbcTemplateService.updateAgeByID(updateAgeRequest);
+        return ResponseEntity.ok(new UpdateAgeResponse(user));
     }
 
     @DeleteMapping("/user/{id}")
