@@ -4,11 +4,16 @@ import com.example.springMVC.dto.UpdateAgeRequest;
 import com.example.springMVC.dto.UpdateAgeResponse;
 import com.example.springMVC.dto.UpdatePhoneNumberRequest;
 import com.example.springMVC.dto.UserResponse;
+import com.example.springMVC.exception.UserInfoException;
 import com.example.springMVC.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class UserController {
 
     private final UserService userService;
@@ -24,6 +29,10 @@ public class UserController {
         return ResponseEntity.ok(userService.updatePhoneNumberByNameAndAge(request));
     }
 
+    @ExceptionHandler(UserInfoException.class)
+    public ResponseEntity<?> handleUpdatePhoneNumber(UserInfoException e) {
+        return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+    }
 
     // TODO 2 : age가 음수 또는 100이상일 때는 "유효하지 않은 나이입니다"를 사용자에게 반환하고,
     //          age가 19세 미만인 경우 "서비스 정책에 맞지 않는 사용자 나이입니다"를 사용자에게 반환하세요.

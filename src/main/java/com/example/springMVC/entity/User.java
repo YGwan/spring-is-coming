@@ -1,6 +1,6 @@
 package com.example.springMVC.entity;
 
-import com.example.springMVC.exception.UserException;
+import com.example.springMVC.exception.UserInfoException;
 
 public class User {
 
@@ -19,9 +19,9 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void validateEqualByNameAndAge(User realUser) {
+    public void validateEqualByNameAndAge(User realUser) throws UserInfoException {
         if(!(realUser.getName().equals(this.name)) || !(realUser.getAge().equals(this.age))) {
-            throw new UserException("정보 불일치");
+            throw new UserInfoException("정보 불일치");
         }
     }
 
