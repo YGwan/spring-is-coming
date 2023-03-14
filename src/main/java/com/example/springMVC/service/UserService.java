@@ -6,6 +6,7 @@ import com.example.springMVC.dto.UpdateAgeResponse;
 import com.example.springMVC.dto.UpdatePhoneNumberRequest;
 import com.example.springMVC.dto.UserResponse;
 import com.example.springMVC.entity.User;
+import com.example.springMVC.exception.UserConditionException;
 import com.example.springMVC.exception.UserInfoException;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,13 @@ public class UserService {
         return UserResponse.of(userDao.updateUserById(user));
     }
 
-    public UpdateAgeResponse updateAgeById(UpdateAgeRequest request) {
+    public UpdateAgeResponse updateAgeById(UpdateAgeRequest request) throws UserInfoException {
+        if (request.getAge() < 0 || request.getAge() >= 100) {
+            throw new UserInfoException("유효하지 않은 나이입니다.");
+        }
+        if (request.getAge() < 20) {
+            throw new UserConditionException("서비스 정책에 맞지 않는 사용자 나이입니다.");
+        }
         return userDao.updateAgeById(request);
     }
 
