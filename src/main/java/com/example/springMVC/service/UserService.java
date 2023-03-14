@@ -6,7 +6,7 @@ import com.example.springMVC.dto.UpdateAgeResponse;
 import com.example.springMVC.dto.UpdatePhoneNumberRequest;
 import com.example.springMVC.dto.UserResponse;
 import com.example.springMVC.entity.User;
-import com.example.springMVC.exception.UserException;
+import com.example.springMVC.exception.UserInfoException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,21 +20,21 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public User updatePhoneNumberByNameAndAge(UpdatePhoneNumberRequest request) {
+    public UserResponse updatePhoneNumberByNameAndAge(UpdatePhoneNumberRequest request) throws UserInfoException {
         final User requestUser = request.toUser();
         final User realUser = userDao.getUser(request.getId());
 
         requestUser.validateEqualByNameAndAge(realUser);
 
         if (requestUser.getPhoneNumber().equals(realUser.getPhoneNumber())) {
-            throw new UserException("휴대폰 번호가 중복되었습니다.");
+            throw new UserInfoException("휴대폰 번호가 중복되었습니다.");
         }
         userDao.updatePhoneNumberById(request);
-        return requestUser;
+        return UserResponse.of(requestUser);
     }
 
-    public User getUser(Long id) {
-        return userDao.getUser(id);
+    public UserResponse getUser(Long id) {
+        return UserResponse.of(userDao.getUser(id));
     }
 
     public Long insertUser(User user) {
