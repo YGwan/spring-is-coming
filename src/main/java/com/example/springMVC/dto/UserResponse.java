@@ -1,6 +1,6 @@
-package com.example.springhello.dto;
+package com.example.springMVC.dto;
 
-import com.example.springhello.entity.User;
+import com.example.springMVC.entity.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

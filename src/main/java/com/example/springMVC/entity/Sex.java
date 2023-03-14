@@ -1,4 +1,4 @@
-package com.example.springhello.entity;
+package com.example.springMVC.entity;
 
 public enum Sex {
     남,녀

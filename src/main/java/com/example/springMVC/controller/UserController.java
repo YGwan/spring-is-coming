@@ -1,10 +1,10 @@
-package com.example.springhello.controller;
+package com.example.springMVC.controller;
 
-import com.example.springhello.dto.UpdateAgeRequest;
-import com.example.springhello.dto.UpdateAgeResponse;
-import com.example.springhello.dto.UpdatePhoneNumberRequest;
-import com.example.springhello.entity.User;
-import com.example.springhello.service.UserService;
+import com.example.springMVC.dto.UpdateAgeRequest;
+import com.example.springMVC.dto.UpdateAgeResponse;
+import com.example.springMVC.dto.UpdatePhoneNumberRequest;
+import com.example.springMVC.entity.User;
+import com.example.springMVC.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;

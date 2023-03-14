@@ -1,7 +1,7 @@
-package com.example.springhello.controller;
+package com.example.springMVC.controller;
 
-import com.example.springhello.dto.HiRequest;
-import com.example.springhello.entity.Sex;
+import com.example.springMVC.dto.HiRequest;
+import com.example.springMVC.entity.Sex;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Controller
-public class MyController {
+public class HiController {
 
     private int count = 0;
 

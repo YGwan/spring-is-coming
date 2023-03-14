@@ -1,6 +1,6 @@
-package com.example.springhello.entity;
+package com.example.springMVC.entity;
 
-import com.example.springhello.exception.UserException;
+import com.example.springMVC.exception.UserException;
 
 public class User {
 

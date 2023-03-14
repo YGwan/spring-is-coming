@@ -1,26 +1,22 @@
-package com.example.springhello.dto;
+package com.example.springMVC.dto;
 
-import com.example.springhello.entity.User;
+import com.example.springMVC.entity.User;
 
 public class UpdateAgeResponse {
 
     private Long id;
-    private String name;
     private Integer age;
-    private String phoneNumber;
 
     public UpdateAgeResponse() {
     }
 
-    public UpdateAgeResponse(Long id, String name, Integer age) {
+    public UpdateAgeResponse(Long id, Integer age) {
         this.id = id;
-        this.name = name;
         this.age = age;
-        this.phoneNumber = "***-****-****";
     }
 
     public UpdateAgeResponse(User user) {
-        this(user.getId(), user.getName(), user.getAge());
+        this(user.getId(), user.getAge());
     }
 
     public Long getId() {
@@ -31,27 +27,11 @@ public class UpdateAgeResponse {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getAge() {
         return age;
     }
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

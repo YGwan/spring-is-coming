@@ -1,4 +1,4 @@
-package com.example.springhello.exception;
+package com.example.springMVC.exception;
 
 public class UserException extends IllegalArgumentException {
 

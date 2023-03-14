@@ -1,12 +1,12 @@
-package com.example.springhello.service;
+package com.example.springMVC.service;
 
-import com.example.springhello.dao.UserDao;
-import com.example.springhello.dto.UpdateAgeRequest;
-import com.example.springhello.dto.UpdateAgeResponse;
-import com.example.springhello.dto.UpdatePhoneNumberRequest;
-import com.example.springhello.dto.UserResponse;
-import com.example.springhello.entity.User;
-import com.example.springhello.exception.UserException;
+import com.example.springMVC.dao.UserDao;
+import com.example.springMVC.dto.UpdateAgeRequest;
+import com.example.springMVC.dto.UpdateAgeResponse;
+import com.example.springMVC.dto.UpdatePhoneNumberRequest;
+import com.example.springMVC.dto.UserResponse;
+import com.example.springMVC.entity.User;
+import com.example.springMVC.exception.UserException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

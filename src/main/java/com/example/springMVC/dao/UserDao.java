@@ -1,9 +1,9 @@
-package com.example.springhello.dao;
+package com.example.springMVC.dao;
 
-import com.example.springhello.dto.UpdateAgeRequest;
-import com.example.springhello.dto.UpdateAgeResponse;
-import com.example.springhello.dto.UpdatePhoneNumberRequest;
-import com.example.springhello.entity.User;
+import com.example.springMVC.dto.UpdateAgeRequest;
+import com.example.springMVC.dto.UpdateAgeResponse;
+import com.example.springMVC.dto.UpdatePhoneNumberRequest;
+import com.example.springMVC.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -57,14 +57,7 @@ public class UserDao {
                 "UPDATE USER SET AGE = ?  WHERE ID = ?",
                 request.getAge(), request.getId()
         );
-        return new UpdateAgeResponse(request.getId(), findNameById(request.getId()), request.getAge());
-    }
-
-    private String findNameById(Long id) {
-        return jdbcTemplate.queryForObject(
-                "SELECT NAME FROM USER WHERE ID=?",
-                String.class,
-                id);
+        return new UpdateAgeResponse(request.getId(), request.getAge());
     }
 
     public Long deleteUser(Long id) {
