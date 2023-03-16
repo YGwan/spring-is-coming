@@ -7,6 +7,7 @@ import com.example.springMVC.dto.UserResponse;
 import com.example.springMVC.entity.MyPage;
 import com.example.springMVC.service.LoginService;
 import com.example.springMVC.service.UserService;
+import com.example.springMVC.token.JwtProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,10 +20,12 @@ public class UserController {
 
     private final UserService userService;
     private final LoginService loginService;
+    private final JwtProvider jwtProvider;
 
-    public UserController(UserService userService, LoginService loginService) {
+    public UserController(UserService userService, LoginService loginService, JwtProvider jwtProvider) {
         this.userService = userService;
         this.loginService = loginService;
+        this.jwtProvider = jwtProvider;
     }
 
     @PutMapping("/user/phoneNumber")
@@ -37,7 +40,8 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<String> signUp(@Valid @RequestBody MyPage myPage) {
-        return ResponseEntity.ok(loginService.insertUser(myPage) + "아이디가 생성되었습니다.");
+        String jwtToken = jwtProvider.createToken(myPage.getId(), myPage.getUsername(), myPage.getPassword());
+        return ResponseEntity.ok(loginService.insertUser(myPage) + " " + jwtToken);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
