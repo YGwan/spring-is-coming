@@ -1,7 +1,7 @@
 package com.example.httpServlet;
 
-import com.example.httpServlet.server.Server;
 import com.example.httpServlet.exception.ServerException;
+import com.example.httpServlet.server.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -28,7 +28,7 @@ public class UserDao {
                 userRowMapper,
                 id);
     }
-    
+
     public Long insertUser(User user) {
         jdbcTemplate.update(
                 "INSERT INTO USER VALUES(?,?,?,?)",

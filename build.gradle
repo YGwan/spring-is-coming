@@ -19,6 +19,7 @@ dependencies {
 
     implementation 'mysql:mysql-connector-java'
     implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 }
 
 tasks.named('test') {
