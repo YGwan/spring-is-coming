@@ -3,6 +3,7 @@ package com.example.springMVC.controller;
 import com.example.springMVC.exception.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,5 +18,10 @@ public class MyAdvice {
     @ExceptionHandler(UserException.class)
     public ResponseEntity<?> handleUpdatePhoneNumber(UserException e) {
         return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleInappropriateRequestData() {
+        return new ResponseEntity<>("제대로 입력되지 않은 값이 존재합니다. 다시 확인해주시기 바랍니다.", HttpStatus.BAD_REQUEST);
     }
 }

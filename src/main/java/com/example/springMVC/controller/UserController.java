@@ -1,11 +1,9 @@
 package com.example.springMVC.controller;
 
-import com.example.springMVC.dto.UpdateAgeRequest;
-import com.example.springMVC.dto.UpdateAgeResponse;
-import com.example.springMVC.dto.UpdatePhoneNumberRequest;
-import com.example.springMVC.dto.UserResponse;
-import com.example.springMVC.entity.MyPage;
-import com.example.springMVC.service.LoginService;
+import com.example.springMVC.dto.*;
+import com.example.springMVC.entity.Person;
+import com.example.springMVC.exception.DBException;
+import com.example.springMVC.service.MyPageService;
 import com.example.springMVC.service.UserService;
 import com.example.springMVC.token.JwtProvider;
 import org.springframework.http.HttpStatus;
@@ -19,12 +17,12 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final LoginService loginService;
+    private final MyPageService myPageService;
     private final JwtProvider jwtProvider;
 
-    public UserController(UserService userService, LoginService loginService, JwtProvider jwtProvider) {
+    public UserController(UserService userService, MyPageService myPageService, JwtProvider jwtProvider) {
         this.userService = userService;
-        this.loginService = loginService;
+        this.myPageService = myPageService;
         this.jwtProvider = jwtProvider;
     }
 
@@ -39,14 +37,29 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<String> signUp(@Valid @RequestBody MyPage myPage) {
-        String jwtToken = jwtProvider.createToken(myPage.getId(), myPage.getUsername(), myPage.getPassword());
-        return ResponseEntity.ok(loginService.insertUser(myPage) + " " + jwtToken);
+    public ResponseEntity<String> signUp(@Valid @RequestBody Person person) {
+        String jwtToken = jwtProvider.createToken(person.getId(), person.getUsername(), person.getPassword());
+        return ResponseEntity.ok(myPageService.insertUser(person) + " " + jwtToken);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> emailHandler() {
         return new ResponseEntity<>("올바른 형식의 이메일 주소여야 합니다.", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/logIn")
+    public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
+        try {
+            String jwtToken = jwtProvider.createToken(myPageService.logIn(request), request.getUsername(), request.getPassword());
+            return ResponseEntity.ok(jwtToken);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("적절하지 않는 로그인 요청");
+        }
+    }
+
+    @ExceptionHandler(DBException.class)
+    public ResponseEntity<?> logInHandler(DBException e) {
+        return ResponseEntity.badRequest().body(e.toString());
     }
 
     // TODO 3 : 사용자 회원 가입을 진행하세요. (username, password, re-password, age, email, name, phoneNumber 가 주어집니다.)

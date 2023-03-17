@@ -1,10 +1,10 @@
 package com.example.springMVC.dto;
 
-import com.example.springMVC.entity.MyPage;
+import com.example.springMVC.entity.Person;
 
 import javax.validation.constraints.Email;
 
-public class MyPageResponse {
+public class PersonResponse {
 
     Long id;
     String username;
@@ -15,10 +15,10 @@ public class MyPageResponse {
     String name;
     String phoneNumber;
 
-    public MyPageResponse() {
+    public PersonResponse() {
     }
 
-    public MyPageResponse(Long id, String username, String password, int age, String email, String name, String phoneNumber) {
+    public PersonResponse(Long id, String username, String password, int age, String email, String name, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -32,10 +32,10 @@ public class MyPageResponse {
         return id;
     }
 
-    public static MyPageResponse of(MyPage myPage) {
-        return new MyPageResponse(
-                myPage.getId(), myPage.getUsername(), myPage.getPassword(),
-                myPage.getAge(), myPage.getEmail(), myPage.getName(), myPage.getPhoneNumber()
+    public static PersonResponse of(Person person) {
+        return new PersonResponse(
+                person.getId(), person.getUsername(), person.getPassword(),
+                person.getAge(), person.getEmail(), person.getName(), person.getPhoneNumber()
         );
     }
 

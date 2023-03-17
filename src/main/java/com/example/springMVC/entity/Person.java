@@ -2,7 +2,7 @@ package com.example.springMVC.entity;
 
 import javax.validation.constraints.Email;
 
-public class MyPage {
+public class Person {
 
     private Long id;
     private String username;
@@ -14,10 +14,10 @@ public class MyPage {
     private String name;
     private String phoneNumber;
 
-    public MyPage() {
+    public Person() {
     }
 
-    public MyPage(Long id, String username, String password, String rePassword, int age, String email, String name, String phoneNumber) {
+    public Person(Long id, String username, String password, String rePassword, int age, String email, String name, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;

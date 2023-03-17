@@ -1,30 +1,37 @@
 package com.example.springMVC.service;
 
-import com.example.springMVC.dao.MyPageDao;
-import com.example.springMVC.entity.MyPage;
+import com.example.springMVC.dao.PersonDao;
+import com.example.springMVC.dto.LogInRequest;
+import com.example.springMVC.entity.Person;
+import com.example.springMVC.exception.DBException;
 import com.example.springMVC.exception.UserConditionException;
 import com.example.springMVC.exception.UserException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService {
+public class MyPageService {
 
-    private final MyPageDao myPageDao;
+    private final PersonDao personDao;
 
-    public LoginService(MyPageDao myPageDao) {
-        this.myPageDao = myPageDao;
+    public MyPageService(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
-    public String insertUser(MyPage myPage) throws UserException {
-        validCheck(myPage);
-        return myPageDao.addUser(myPage);
+    public String insertUser(Person person) throws UserException {
+        validCheck(person);
+        return personDao.addUser(person);
     }
 
-    private void validCheck(MyPage myPage) {
-        validUsername(myPage.getUsername());
-        validPassword(myPage.getPassword(), myPage.getRePassword());
-        validAge(myPage.getAge());
-        myPageDao.validDuplicate(myPage.getUsername(), myPage.getEmail());
+    public Long logIn(LogInRequest request) throws DBException {
+        return personDao.validLogIn(request);
+    }
+
+    private void validCheck(Person person) {
+        validUsername(person.getUsername());
+        validPassword(person.getPassword(), person.getRePassword());
+        validAge(person.getAge());
+        personDao.duplicateCheck("USERNAME", person.getUsername());
+        personDao.duplicateCheck("EMAIL", person.getEmail());
     }
 
     private void validUsername(String username) throws UserException {
