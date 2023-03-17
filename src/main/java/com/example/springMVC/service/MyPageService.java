@@ -22,7 +22,7 @@ public class MyPageService {
         return personDao.addUser(person);
     }
 
-    public Long logIn(LogInRequest request) throws DBException {
+    public String logIn(LogInRequest request) throws DBException {
         return personDao.validLogIn(request);
     }
 

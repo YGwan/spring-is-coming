@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<String> signUp(@Valid @RequestBody Person person) {
-        String jwtToken = jwtProvider.createToken(person.getId(), person.getUsername(), person.getPassword());
+        String jwtToken = jwtProvider.createToken(person.getUsername(), person.getEmail());
         return ResponseEntity.ok(myPageService.insertUser(person) + " " + jwtToken);
     }
 
@@ -50,11 +50,16 @@ public class UserController {
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
         try {
-            String jwtToken = jwtProvider.createToken(myPageService.logIn(request), request.getUsername(), request.getPassword());
+            String jwtToken = jwtProvider.createToken(request.getUsername(), myPageService.logIn(request));
             return ResponseEntity.ok(jwtToken);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("적절하지 않는 로그인 요청");
         }
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<String> authUser(@RequestBody AuthUserRequest request) {
+        return ResponseEntity.ok(jwtProvider.validateToken(request.getToken()));
     }
 
     @ExceptionHandler(DBException.class)

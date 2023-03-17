@@ -44,7 +44,7 @@ public class PersonDao {
         return person.getUsername();
     }
 
-    public Long validLogIn(LogInRequest request) {
+    public String validLogIn(LogInRequest request) {
         try {
             String password = jdbcTemplate.queryForObject(
                     "SELECT PASSWORD FROM PERSON WHERE USERNAME IN (?)",
@@ -57,12 +57,12 @@ public class PersonDao {
             }
 
             return jdbcTemplate.queryForObject(
-                    "SELECT ID FROM PERSON WHERE USERNAME IN (?)",
-                    Long.class,
+                    "SELECT EMAIL FROM PERSON WHERE USERNAME IN (?)",
+                    String.class,
                     request.getUsername()
             );
 
-        } catch (EmptyResultDataAccessException e) {
+        } catch (Exception e) {
             throw new DBException("로그인 실패");
         }
     }
