@@ -45,26 +45,21 @@ public class PersonDao {
     }
 
     public String validLogIn(LogInRequest request) {
-        try {
-            String password = jdbcTemplate.queryForObject(
-                    "SELECT PASSWORD FROM PERSON WHERE USERNAME IN (?)",
-                    String.class,
-                    request.getUsername()
-            );
+        String password = jdbcTemplate.queryForObject(
+                "SELECT PASSWORD FROM PERSON WHERE USERNAME IN (?)",
+                String.class,
+                request.getUsername()
+        );
 
-            if (!(request.getPassword().equals(password))) {
-                throw new DBException("로그인 실패");
-            }
-
-            return jdbcTemplate.queryForObject(
-                    "SELECT EMAIL FROM PERSON WHERE USERNAME IN (?)",
-                    String.class,
-                    request.getUsername()
-            );
-
-        } catch (Exception e) {
+        if (!(request.getPassword().equals(password))) {
             throw new DBException("로그인 실패");
         }
+
+        return jdbcTemplate.queryForObject(
+                "SELECT EMAIL FROM PERSON WHERE USERNAME IN (?)",
+                String.class,
+                request.getUsername()
+        );
     }
 }
 

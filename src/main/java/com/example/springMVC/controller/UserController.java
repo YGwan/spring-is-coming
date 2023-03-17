@@ -49,12 +49,8 @@ public class UserController {
 
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
-        try {
-            String jwtToken = jwtProvider.createToken(request.getUsername(), myPageService.logIn(request));
-            return ResponseEntity.ok(jwtToken);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("적절하지 않는 로그인 요청");
-        }
+        String jwtToken = jwtProvider.createToken(request.getUsername(), myPageService.logIn(request));
+        return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/auth")
@@ -65,6 +61,11 @@ public class UserController {
     @ExceptionHandler(DBException.class)
     public ResponseEntity<?> logInHandler(DBException e) {
         return ResponseEntity.badRequest().body(e.toString());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<?> npeHandler() {
+        return ResponseEntity.badRequest().body("적절하지 않은 로그인 요청");
     }
 
     // TODO 3 : 사용자 회원 가입을 진행하세요. (username, password, re-password, age, email, name, phoneNumber 가 주어집니다.)

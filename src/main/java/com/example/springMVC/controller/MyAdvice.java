@@ -24,4 +24,10 @@ public class MyAdvice {
     public ResponseEntity<?> handleInappropriateRequestData() {
         return new ResponseEntity<>("제대로 입력되지 않은 값이 존재합니다. 다시 확인해주시기 바랍니다.", HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<?> npeHandler() {
+        return ResponseEntity.badRequest().body("적절하지 않은 요청입니다.");
+    }
 }
