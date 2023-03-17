@@ -14,7 +14,7 @@ import java.util.Map;
 @Component
 public class JwtProvider {
 
-    private Key key;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String createToken(String username, String email) {
         Map<String, Object> payloads = new HashMap<>();
@@ -22,9 +22,6 @@ public class JwtProvider {
         payloads.put("email", email);
         Date now = new Date();
         Date expiration = new Date(now.getTime() + Duration.ofDays(1).toMillis());
-
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(payloads)
@@ -36,7 +33,7 @@ public class JwtProvider {
 
     public String validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+            Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
             return "올바른 토큰입니다.";
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             throw new UserException("잘못된 JWT 서명입니다.");
