@@ -14,7 +14,11 @@ import java.util.Map;
 @Component
 public class JwtProvider {
 
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final Key key;
+
+    public JwtProvider() {
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    }
 
     public String createToken(String username, String email) {
         Map<String, Object> payloads = new HashMap<>();
