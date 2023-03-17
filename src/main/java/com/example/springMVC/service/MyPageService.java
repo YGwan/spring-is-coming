@@ -28,9 +28,9 @@ public class MyPageService {
 
     private void validCheck(Person person) {
         validUsername(person.getUsername());
+        personDao.duplicateCheck("USERNAME", person.getUsername());
         validPassword(person.getPassword(), person.getRePassword());
         validAge(person.getAge());
-        personDao.duplicateCheck("USERNAME", person.getUsername());
         personDao.duplicateCheck("EMAIL", person.getEmail());
     }
 
