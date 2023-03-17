@@ -4,7 +4,6 @@ import com.example.springMVC.dao.PersonDao;
 import com.example.springMVC.dto.LogInRequest;
 import com.example.springMVC.entity.Person;
 import com.example.springMVC.exception.DBException;
-import com.example.springMVC.exception.UserConditionException;
 import com.example.springMVC.exception.UserException;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +54,7 @@ public class MyPageService {
             throw new UserException("유효하지 않은 나이입니다.");
         }
         if (age < 20) {
-            throw new UserConditionException("서비스 정책에 맞지 않는 사용자 나이입니다.");
+            throw new UserException("서비스 정책에 맞지 않는 사용자 나이입니다.");
         }
     }
 }
