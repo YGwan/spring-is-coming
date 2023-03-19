@@ -1,14 +1,16 @@
 package com.example.springMVC.controller;
 
 import com.example.springMVC.exception.UserException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class MyAdvice {
+public class MyPageExceptionController {
 
     // TODO 1 : 사용자 정보가 안맞는 요청이 들어온 경우 적절한 HTTP 응답 코드와 함께 예외 메시지를 사용자에게 출력하세요.
     //          @ExceptionHandler
@@ -28,5 +30,15 @@ public class MyAdvice {
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<?> npeHandler() {
         return ResponseEntity.badRequest().body("적절하지 않은 요청입니다.");
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<?> erdaHandler() {
+        return ResponseEntity.badRequest().body("조회 결과가 존재하지 않습니다.");
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> hrmnsHandler() {
+        return ResponseEntity.badRequest().body("적절한 형식의 요청 타입이 아닙니다.");
     }
 }

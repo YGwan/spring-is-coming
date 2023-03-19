@@ -1,9 +1,10 @@
 package com.example.springMVC.dao;
 
-import com.example.springMVC.dto.UpdateAgeRequest;
-import com.example.springMVC.dto.UpdateAgeResponse;
-import com.example.springMVC.dto.UpdatePhoneNumberRequest;
+import com.example.springMVC.dto.*;
 import com.example.springMVC.entity.User;
+import com.example.springMVC.exception.DBException;
+import com.example.springMVC.exception.UserException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -44,14 +45,6 @@ public class UserDao {
         );
     }
 
-    public User updateUserById(User user) {
-        jdbcTemplate.update(
-                "UPDATE USER SET NAME = ?, AGE = ?, PHONENUMBER = ?  WHERE ID = ?",
-                user.getName(), user.getAge(), user.getPhoneNumber(), user.getId()
-        );
-        return new User(user.getId(), user.getName(), user.getAge(), user.getPhoneNumber());
-    }
-
     public UpdateAgeResponse updateAgeById(UpdateAgeRequest request) {
         jdbcTemplate.update(
                 "UPDATE USER SET AGE = ?  WHERE ID = ?",
@@ -74,16 +67,57 @@ public class UserDao {
                 request.getPhoneNumber(), request.getId()
         );
     }
+
+    public void duplicateCheck(String targetColumn, String targetValue) throws UserException {
+        try {
+            jdbcTemplate.queryForObject(
+                    "SELECT USERNAME FROM USER WHERE " + targetColumn + " IN (?)",
+                    String.class,
+                    targetValue
+            );
+            throw new UserException(targetColumn + " 이 중복되었습니다.");
+        } catch (EmptyResultDataAccessException ignored) {
+        }
+    }
+
+    public String addUser(SignUpRequest request) {
+        jdbcTemplate.update(
+                "INSERT INTO USER VALUES(?,?,?,?,?,?,?)",
+                request.getId(), request.getUsername(), request.getPassword(),
+                request.getAge(), request.getEmail(), request.getName(), request.getPhoneNumber()
+        );
+        return request.getUsername();
+    }
+
+    public String validLogIn(LogInRequest request) {
+        String password = jdbcTemplate.queryForObject(
+                "SELECT PASSWORD FROM USER WHERE USERNAME IN (?)",
+                String.class,
+                request.getUsername()
+        );
+
+        if (!(request.getPassword().equals(password))) {
+            throw new DBException("로그인 실패");
+        }
+
+        return jdbcTemplate.queryForObject(
+                "SELECT EMAIL FROM USER WHERE USERNAME IN (?)",
+                String.class,
+                request.getUsername()
+        );
+    }
 }
 
 class UserRowMapper implements RowMapper<User> {
-
     @Override
     public User mapRow(ResultSet rs, int count) throws SQLException {
         User user = new User();
         user.setId(rs.getLong("id"));
-        user.setName(rs.getString("name"));
+        user.setUsername(rs.getString("username"));
+        user.setPassword(rs.getString("password"));
         user.setAge(rs.getInt("age"));
+        user.setEmail(rs.getString("email"));
+        user.setName(rs.getString("name"));
         user.setPhoneNumber(rs.getString("phoneNumber"));
         return user;
     }

@@ -1,61 +1,38 @@
 package com.example.springMVC.controller;
 
 import com.example.springMVC.dto.*;
-import com.example.springMVC.entity.Person;
 import com.example.springMVC.exception.DBException;
-import com.example.springMVC.service.MyPageService;
 import com.example.springMVC.service.UserService;
 import com.example.springMVC.token.JwtProvider;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
-    private final MyPageService myPageService;
     private final JwtProvider jwtProvider;
 
-    public UserController(UserService userService, MyPageService myPageService, JwtProvider jwtProvider) {
+    public UserController(UserService userService, JwtProvider jwtProvider) {
         this.userService = userService;
-        this.myPageService = myPageService;
         this.jwtProvider = jwtProvider;
     }
 
-    @PutMapping("/user/phoneNumber")
-    public ResponseEntity<UserResponse> updatePhoneNumber(@RequestBody UpdatePhoneNumberRequest request) {
+    @PutMapping("/phoneNumber")
+    public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(@RequestBody UpdatePhoneNumberRequest request) {
         return ResponseEntity.ok(userService.updatePhoneNumberByNameAndAge(request));
     }
 
-    @PutMapping("/user/age")
+    @PutMapping("/age")
     public ResponseEntity<UpdateAgeResponse> updateAge(@RequestBody UpdateAgeRequest request) {
         return ResponseEntity.ok(userService.updateAgeById(request));
     }
 
-    @PostMapping("/signUp")
-    public ResponseEntity<String> signUp(@Valid @RequestBody Person person) {
-        String jwtToken = jwtProvider.createToken(person.getUsername(), person.getEmail());
-        return ResponseEntity.ok(myPageService.insertUser(person) + " " + jwtToken);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> emailHandler() {
-        return new ResponseEntity<>("올바른 형식의 이메일 주소여야 합니다.", HttpStatus.BAD_REQUEST);
-    }
-
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
-        String jwtToken = jwtProvider.createToken(request.getUsername(), myPageService.logIn(request));
+        String jwtToken = jwtProvider.createToken(request.getUsername(), userService.logIn(request));
         return ResponseEntity.ok(jwtToken);
-    }
-
-    @PostMapping("/auth")
-    public ResponseEntity<String> authUser(@RequestBody AuthUserRequest request) {
-        return ResponseEntity.ok(jwtProvider.validateToken(request.getToken()));
     }
 
     @ExceptionHandler(DBException.class)

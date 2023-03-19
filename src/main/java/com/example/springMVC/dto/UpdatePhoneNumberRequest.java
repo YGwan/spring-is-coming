@@ -1,7 +1,5 @@
 package com.example.springMVC.dto;
 
-import com.example.springMVC.entity.User;
-
 public class UpdatePhoneNumberRequest {
 
     private Long id;
@@ -19,8 +17,8 @@ public class UpdatePhoneNumberRequest {
         this.phoneNumber = phoneNumber;
     }
 
-    public User toUser() {
-        return new User(id, name, age, phoneNumber);
+    public static UpdatePhoneNumberResponse of(UpdatePhoneNumberRequest request) {
+        return new UpdatePhoneNumberResponse(request.getPhoneNumber(), request.getName());
     }
 
     public Long getId() {

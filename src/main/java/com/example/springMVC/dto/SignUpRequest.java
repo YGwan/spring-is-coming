@@ -1,23 +1,21 @@
-package com.example.springMVC.entity;
+package com.example.springMVC.dto;
 
-import javax.validation.constraints.Email;
-
-public class Person {
+public class SignUpRequest {
 
     private Long id;
     private String username;
     private String password;
     private String rePassword;
     private int age;
-    @Email
     private String email;
     private String name;
     private String phoneNumber;
 
-    public Person() {
+    public SignUpRequest() {
     }
 
-    public Person(Long id, String username, String password, String rePassword, int age, String email, String name, String phoneNumber) {
+    public SignUpRequest(Long id, String username, String password, String rePassword,
+                         int age, String email, String name, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
