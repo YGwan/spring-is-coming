@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class MyPageExceptionController {
+public class PageControllerAdvice {
 
     // TODO 1 : 사용자 정보가 안맞는 요청이 들어온 경우 적절한 HTTP 응답 코드와 함께 예외 메시지를 사용자에게 출력하세요.
     //          @ExceptionHandler
