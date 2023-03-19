@@ -1,5 +1,7 @@
 package com.example.springMVC.dto;
 
+import com.example.springMVC.exception.UserException;
+
 import javax.validation.constraints.Email;
 
 public class SignUpRequest {
@@ -54,7 +56,7 @@ public class SignUpRequest {
     }
 
     public String getRePassword() {
-        return rePassword.trim();
+        return rePassword;
     }
 
     public void setRePassword(String rePassword) {

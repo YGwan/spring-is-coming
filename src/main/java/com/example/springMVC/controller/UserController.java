@@ -1,11 +1,16 @@
 package com.example.springMVC.controller;
 
 import com.example.springMVC.dto.*;
-import com.example.springMVC.exception.DBException;
+import com.example.springMVC.exception.UserException;
 import com.example.springMVC.service.UserService;
 import com.example.springMVC.token.JwtProvider;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
@@ -29,15 +34,34 @@ public class UserController {
         return ResponseEntity.ok(userService.updateAgeById(request));
     }
 
+    @PostMapping("/signUp")
+    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest request) {
+        String jwtToken = jwtProvider.createToken(request.getUsername(), request.getEmail());
+        return ResponseEntity.ok(userService.signUp(request) + " " + jwtToken);
+    }
+
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
         String jwtToken = jwtProvider.createToken(request.getUsername(), userService.logIn(request));
         return ResponseEntity.ok(jwtToken);
     }
 
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<?> logInHandler() {
-        return ResponseEntity.badRequest().body("적절하지 않은 로그인 요청");
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> emailHandler() {
+        return new ResponseEntity<>("올바른 형식의 이메일 주소여야 합니다.", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<String> userExceptionHandler(UserException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<String> auth(HttpServletRequest request) {
+        if (jwtProvider.validateToken(request.getHeader("Authorization").trim())) {
+            return ResponseEntity.ok("성공");
+        }
+        return ResponseEntity.badRequest().body("실패");
     }
 }
 

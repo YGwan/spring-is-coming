@@ -39,12 +39,7 @@ public class UserService {
     }
 
     public UpdateAgeResponse updateAgeById(UpdateAgeRequest request) throws UserException {
-        if (request.getAge() < 0 || request.getAge() >= 100) {
-            throw new UserException("유효하지 않은 나이입니다.");
-        }
-        if (request.getAge() < 20) {
-            throw new UserException("서비스 정책에 맞지 않는 사용자 나이입니다.");
-        }
+        validateAge(request.getAge());
         return userDao.updateAgeById(request);
     }
 
@@ -57,14 +52,14 @@ public class UserService {
     }
 
     public String signUp(SignUpRequest request) throws UserException {
-        validateCheck(request);
+        signUpValidate(request);
         return userDao.addUser(request);
     }
 
-    private void validateCheck(SignUpRequest request) {
+    private void signUpValidate(SignUpRequest request) {
         validateUsername(request.getUsername());
-        userDao.duplicateCheck("USERNAME", request.getUsername());
         validatePassword(request.getPassword(), request.getRePassword());
+        userDao.duplicateCheck("USERNAME", request.getUsername());
         validateAge(request.getAge());
         userDao.duplicateCheck("EMAIL", request.getEmail());
     }
@@ -75,13 +70,9 @@ public class UserService {
         }
     }
 
-    private void validatePassword(String passwd, String rePasswd) throws UserException {
-        if (!passwd.equals(rePasswd)) {
+    private void validatePassword(String password, String rePassword) throws UserException {
+        if (!password.equals(rePassword)) {
             throw new UserException("패스워드가 서로 다릅니다.");
-        }
-
-        if (!(passwd.length() >= 3 && passwd.length() < 10)) {
-            throw new UserException("유효하지 않은 글자수 입니다.");
         }
     }
 

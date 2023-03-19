@@ -1,13 +1,17 @@
 package com.example;
 
+import com.example.springMVC.config.SecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class SpringMVCApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringMVCApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(SpringMVCApplication.class, args);
+        SecurityConfig securityConfig = context.getBean(SecurityConfig.class);
+        System.out.println(securityConfig.getKey());
     }
 }
 

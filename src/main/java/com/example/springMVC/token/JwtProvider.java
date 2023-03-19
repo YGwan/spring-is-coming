@@ -2,8 +2,6 @@ package com.example.springMVC.token;
 
 import com.example.springMVC.exception.UserException;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.time.Duration;
@@ -11,13 +9,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class JwtProvider {
 
     private final Key key;
 
-    public JwtProvider() {
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    public JwtProvider(Key key) {
+        this.key = key;
     }
 
     public String createToken(String username, String email) {
@@ -35,10 +32,10 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
-            return "올바른 토큰입니다.";
+            return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             throw new UserException("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
