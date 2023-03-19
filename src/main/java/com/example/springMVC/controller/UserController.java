@@ -1,6 +1,7 @@
 package com.example.springMVC.controller;
 
 import com.example.springMVC.dto.*;
+import com.example.springMVC.exception.AuthException;
 import com.example.springMVC.exception.UserException;
 import com.example.springMVC.service.UserService;
 import com.example.springMVC.token.JwtProvider;
@@ -25,12 +26,18 @@ public class UserController {
     }
 
     @PutMapping("/phoneNumber")
-    public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(@RequestBody UpdatePhoneNumberRequest request) {
+    public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(HttpServletRequest httpServletRequest, @RequestBody UpdatePhoneNumberRequest request) {
+        if (!jwtProvider.validateToken(httpServletRequest.getHeader("Authorization").trim())) {
+            throw new AuthException("권한 없음");
+        }
         return ResponseEntity.ok(userService.updatePhoneNumberByNameAndAge(request));
     }
 
     @PutMapping("/age")
-    public ResponseEntity<UpdateAgeResponse> updateAge(@RequestBody UpdateAgeRequest request) {
+    public ResponseEntity<UpdateAgeResponse> updateAge(HttpServletRequest httpServletRequest, @RequestBody UpdateAgeRequest request) {
+        if (!jwtProvider.validateToken(httpServletRequest.getHeader("Authorization").trim())) {
+            throw new AuthException("권한 없음");
+        }
         return ResponseEntity.ok(userService.updateAgeById(request));
     }
 
@@ -46,9 +53,17 @@ public class UserController {
         return ResponseEntity.ok(jwtToken);
     }
 
+    @PostMapping("/auth")
+    public ResponseEntity<String> auth(HttpServletRequest request) {
+        if (jwtProvider.validateToken(request.getHeader("Authorization").trim())) {
+            return ResponseEntity.ok("성공");
+        }
+        return ResponseEntity.badRequest().body("실패");
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> emailHandler() {
-        return new ResponseEntity<>("올바른 형식의 이메일 주소여야 합니다.", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> manvException(MethodArgumentNotValidException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserException.class)
@@ -56,12 +71,9 @@ public class UserController {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @PostMapping("/auth")
-    public ResponseEntity<String> auth(HttpServletRequest request) {
-        if (jwtProvider.validateToken(request.getHeader("Authorization").trim())) {
-            return ResponseEntity.ok("성공");
-        }
-        return ResponseEntity.badRequest().body("실패");
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<String> authExceptionHandler(AuthException e) {
+        return ResponseEntity.status(410).body(e.getMessage());
     }
 }
 
@@ -105,3 +117,5 @@ public class UserController {
 
 // TODO 10 : 스프링 스큐리티 사용 금지
 //          - 라이브러리 (jjwt) 사용하세요. gradle 의존성을 추가하면 됩니다.
+
+// TODO 11 : id 자동 생성

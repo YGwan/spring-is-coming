@@ -2,13 +2,9 @@ package com.example.springMVC.controller;
 
 import com.example.springMVC.dto.UserResponse;
 import com.example.springMVC.service.UserService;
-import com.example.springMVC.token.JwtProvider;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequestMapping("/admin")
@@ -16,11 +12,9 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
-    private final JwtProvider jwtProvider;
 
-    public AdminController(UserService userService, JwtProvider jwtProvider) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.jwtProvider = jwtProvider;
     }
 
     @GetMapping("/user/{id}")
