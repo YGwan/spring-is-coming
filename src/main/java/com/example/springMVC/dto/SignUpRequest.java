@@ -1,5 +1,7 @@
 package com.example.springMVC.dto;
 
+import javax.validation.constraints.Email;
+
 public class SignUpRequest {
 
     private Long id;
@@ -7,6 +9,7 @@ public class SignUpRequest {
     private String password;
     private String rePassword;
     private int age;
+    @Email
     private String email;
     private String name;
     private String phoneNumber;

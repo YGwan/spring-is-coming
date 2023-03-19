@@ -30,14 +30,6 @@ public class UserDao {
                 id);
     }
 
-    public Long insertUser(User user) {
-        jdbcTemplate.update(
-                "INSERT INTO USER VALUES(?,?,?,?)",
-                user.getId(), user.getName(), user.getAge(), user.getPhoneNumber()
-        );
-        return user.getId();
-    }
-
     public List<User> getAllUsers() {
         return jdbcTemplate.query(
                 "SELECT * FROM USER",

@@ -44,6 +44,7 @@ public class UserController {
     public ResponseEntity<?> npeHandler() {
         return ResponseEntity.badRequest().body("적절하지 않은 로그인 요청");
     }
+}
 
     // TODO 3 : 사용자 회원 가입을 진행하세요. (username, password, re-password, age, email, name, phoneNumber 가 주어집니다.)
     //          서비스 유저 정책은 다음과 같습니다.
@@ -85,4 +86,3 @@ public class UserController {
 
     // TODO 10 : 스프링 스큐리티 사용 금지
     //          - 라이브러리 (jjwt) 사용하세요. gradle 의존성을 추가하면 됩니다.
-}
