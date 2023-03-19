@@ -63,7 +63,7 @@ public class UserDao {
     public void duplicateCheck(String targetColumn, String targetValue) throws UserException {
         try {
             jdbcTemplate.queryForObject(
-                    "SELECT USERNAME FROM USER WHERE " + targetColumn + " IN (?)",
+                    "SELECT USERNAME FROM USER WHERE " + targetColumn + " = ?",
                     String.class,
                     targetValue
             );

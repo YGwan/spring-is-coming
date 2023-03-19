@@ -1,5 +1,6 @@
 package com.example.springMVC.controller;
 
+import com.example.springMVC.exception.DBException;
 import com.example.springMVC.exception.UserException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,11 @@ public class PageControllerAdvice {
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<?> npeHandler() {
         return ResponseEntity.badRequest().body("적절하지 않은 요청입니다.");
+    }
+
+    @ExceptionHandler(DBException.class)
+    public ResponseEntity<?> dbeHandler() {
+        return ResponseEntity.badRequest().body("에러가 발생하였습니다.");
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
