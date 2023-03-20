@@ -81,7 +81,7 @@ public class UserDao {
         return request.getUsername();
     }
 
-    public void validLogIn(LogInRequest request) {
+    public void validateLogIn(LogInRequest request) {
         String password = jdbcTemplate.queryForObject(
                 "SELECT PASSWORD FROM USER WHERE USERNAME IN (?)",
                 String.class,

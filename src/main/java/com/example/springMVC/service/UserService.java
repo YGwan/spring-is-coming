@@ -48,7 +48,7 @@ public class UserService {
     }
 
     public void logIn(LogInRequest request) throws DBException {
-        userDao.validLogIn(request);
+        userDao.validateLogIn(request);
     }
 
     public String signUp(SignUpRequest request) throws UserException {
