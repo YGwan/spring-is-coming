@@ -17,10 +17,9 @@ public class JwtProvider {
         this.key = key;
     }
 
-    public String createToken(String username, String email) {
+    public String createToken(String username) {
         Map<String, Object> payloads = new HashMap<>();
         payloads.put("username", username);
-        payloads.put("email", email);
         Date now = new Date();
         Date expiration = new Date(now.getTime() + Duration.ofDays(1).toMillis());
         return Jwts.builder()

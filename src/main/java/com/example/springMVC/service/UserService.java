@@ -47,8 +47,8 @@ public class UserService {
         return userDao.deleteUser(id);
     }
 
-    public String logIn(LogInRequest request) throws DBException {
-        return userDao.validLogIn(request);
+    public void logIn(LogInRequest request) throws DBException {
+        userDao.validLogIn(request);
     }
 
     public String signUp(SignUpRequest request) throws UserException {

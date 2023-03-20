@@ -81,7 +81,7 @@ public class UserDao {
         return request.getUsername();
     }
 
-    public String validLogIn(LogInRequest request) {
+    public void validLogIn(LogInRequest request) {
         String password = jdbcTemplate.queryForObject(
                 "SELECT PASSWORD FROM USER WHERE USERNAME IN (?)",
                 String.class,
@@ -91,12 +91,6 @@ public class UserDao {
         if (!(request.getPassword().equals(password))) {
             throw new DBException("로그인 실패");
         }
-
-        return jdbcTemplate.queryForObject(
-                "SELECT EMAIL FROM USER WHERE USERNAME IN (?)",
-                String.class,
-                request.getUsername()
-        );
     }
 }
 

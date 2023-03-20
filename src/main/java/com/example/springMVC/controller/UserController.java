@@ -43,13 +43,14 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest request) {
-        String jwtToken = jwtProvider.createToken(request.getUsername(), request.getEmail());
+        String jwtToken = jwtProvider.createToken(request.getUsername());
         return ResponseEntity.ok(userService.signUp(request) + " " + jwtToken);
     }
 
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
-        String jwtToken = jwtProvider.createToken(request.getUsername(), userService.logIn(request));
+        userService.logIn(request);
+        String jwtToken = jwtProvider.createToken(request.getUsername());
         return ResponseEntity.ok(jwtToken);
     }
 
