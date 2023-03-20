@@ -17,7 +17,7 @@ public class JwtProvider {
         this.key = key;
     }
 
-    public String createToken(String username) {
+    public String createTokenByUsername(String username) {
         Map<String, Object> payloads = new HashMap<>();
         payloads.put("username", username);
         Date now = new Date();
@@ -31,7 +31,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public boolean validToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
             return true;

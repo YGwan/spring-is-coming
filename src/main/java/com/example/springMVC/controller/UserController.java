@@ -27,7 +27,7 @@ public class UserController {
 
     @PutMapping("/phoneNumber")
     public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(HttpServletRequest httpServletRequest, @RequestBody UpdatePhoneNumberRequest request) {
-        if (!jwtProvider.validateToken(httpServletRequest.getHeader("Authorization").trim())) {
+        if (!jwtProvider.validToken(httpServletRequest.getHeader("Authorization").trim())) {
             throw new AuthException("권한 없음");
         }
         return ResponseEntity.ok(userService.updatePhoneNumberByNameAndAge(request));
@@ -35,7 +35,7 @@ public class UserController {
 
     @PutMapping("/age")
     public ResponseEntity<UpdateAgeResponse> updateAge(HttpServletRequest httpServletRequest, @RequestBody UpdateAgeRequest request) {
-        if (!jwtProvider.validateToken(httpServletRequest.getHeader("Authorization").trim())) {
+        if (!jwtProvider.validToken(httpServletRequest.getHeader("Authorization").trim())) {
             throw new AuthException("권한 없음");
         }
         return ResponseEntity.ok(userService.updateAgeById(request));
@@ -43,20 +43,20 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest request) {
-        String jwtToken = jwtProvider.createToken(request.getUsername());
+        String jwtToken = jwtProvider.createTokenByUsername(request.getUsername());
         return ResponseEntity.ok(userService.signUp(request) + " " + jwtToken);
     }
 
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody LogInRequest request) {
         userService.logIn(request);
-        String jwtToken = jwtProvider.createToken(request.getUsername());
+        String jwtToken = jwtProvider.createTokenByUsername(request.getUsername());
         return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/auth")
     public ResponseEntity<String> auth(HttpServletRequest request) {
-        if (jwtProvider.validateToken(request.getHeader("Authorization").trim())) {
+        if (jwtProvider.validToken(request.getHeader("Authorization").trim())) {
             return ResponseEntity.ok("성공");
         }
         return ResponseEntity.badRequest().body("실패");
