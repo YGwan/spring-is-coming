@@ -1,6 +1,6 @@
 package com.example.springMVC.token;
 
-import com.example.springMVC.exception.UserException;
+import com.example.springMVC.exception.AuthException;
 import io.jsonwebtoken.*;
 
 import java.security.Key;
@@ -36,13 +36,13 @@ public class JwtProvider {
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            throw new UserException("잘못된 JWT 서명입니다.");
+            throw new AuthException("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-            throw new UserException("만료된 JWT 토큰입니다.");
+            throw new AuthException("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
-            throw new UserException("지원되지 않는 JWT 토큰입니다.");
+            throw new AuthException("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
-            throw new UserException("JWT 토큰이 잘못되었습니다.");
+            throw new AuthException("JWT 토큰이 잘못되었습니다.");
         }
     }
 }

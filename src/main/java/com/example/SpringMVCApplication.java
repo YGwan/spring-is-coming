@@ -9,6 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class SpringMVCApplication {
 
     public static void main(String[] args) {
+
         ConfigurableApplicationContext context = SpringApplication.run(SpringMVCApplication.class, args);
         SecurityConfig securityConfig = context.getBean(SecurityConfig.class);
         System.out.println(securityConfig.getKey());

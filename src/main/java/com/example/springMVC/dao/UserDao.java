@@ -82,13 +82,14 @@ public class UserDao {
     }
 
     public void validateLogIn(LogInRequest request) {
-        String password = jdbcTemplate.queryForObject(
-                "SELECT PASSWORD FROM USER WHERE USERNAME IN (?)",
-                String.class,
-                request.getUsername()
-        );
+        try {
+            jdbcTemplate.queryForObject(
+                    "SELECT ID FROM USER WHERE USERNAME = ? AND PASSWORD = ?",
+                    Long.class,
+                    request.getUsername(), request.getPassword()
+            );
 
-        if (!(request.getPassword().equals(password))) {
+        } catch (EmptyResultDataAccessException e) {
             throw new DBException("로그인 실패");
         }
     }

@@ -59,12 +59,12 @@ public class UserController {
         if (jwtProvider.validToken(request.getHeader("Authorization").trim())) {
             return ResponseEntity.ok("성공");
         }
-        return ResponseEntity.badRequest().body("실패");
+        throw new AuthException("권한 없음");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> manvException(MethodArgumentNotValidException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> manvException(MethodArgumentNotValidException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @ExceptionHandler(UserException.class)
@@ -74,7 +74,7 @@ public class UserController {
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<String> authExceptionHandler(AuthException e) {
-        return ResponseEntity.status(410).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 }
 

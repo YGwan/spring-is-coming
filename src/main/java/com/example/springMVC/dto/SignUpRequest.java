@@ -1,7 +1,5 @@
 package com.example.springMVC.dto;
 
-import com.example.springMVC.exception.UserException;
-
 import javax.validation.constraints.Email;
 
 public class SignUpRequest {
