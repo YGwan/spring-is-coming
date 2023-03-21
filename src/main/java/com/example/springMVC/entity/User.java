@@ -10,7 +10,7 @@ public class User {
     private String username;
     private String password;
     private Integer age;
-    @Email(message = "이메일 fcuck")
+    @Email
     private String email;
     private String name;
     private String phoneNumber;
