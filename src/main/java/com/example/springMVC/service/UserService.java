@@ -80,7 +80,7 @@ public class UserService {
         if (age <= 0 || age >= 100) {
             throw new UserException("유효하지 않은 나이입니다.");
         }
-        if (age < 20) {
+        if (age < 19) {
             throw new UserException("서비스 정책에 맞지 않는 사용자 나이입니다.");
         }
     }
