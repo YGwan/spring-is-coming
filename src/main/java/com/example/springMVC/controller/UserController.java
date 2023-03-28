@@ -61,14 +61,6 @@ public class UserController {
         return ResponseEntity.ok(jwtToken);
     }
 
-    @PostMapping("/auth")
-    public ResponseEntity<String> auth(HttpServletRequest request) {
-        if (jwtProvider.validToken(request.getHeader("Authorization").trim())) {
-            return ResponseEntity.ok("성공");
-        }
-        throw new AuthException("권한 없음");
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> manvException(MethodArgumentNotValidException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
