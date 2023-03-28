@@ -24,10 +24,14 @@ public class UserDao {
     }
 
     public User getUser(Long id) {
-        return jdbcTemplate.queryForObject(
-                "SELECT * FROM USER WHERE ID=?",
-                userRowMapper,
-                id);
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM USER WHERE ID=?",
+                    userRowMapper,
+                    id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new DBException("존재하지 않는 유저입니다");
+        }
     }
 
     public List<User> getAllUsers() {
