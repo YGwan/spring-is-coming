@@ -37,6 +37,13 @@ public class UserDao {
         );
     }
 
+    public String getUsernameById(Long id) {
+        return jdbcTemplate.queryForObject(
+                "SELECT USERNAME FROM USER WHERE ID=?",
+                String.class,
+                id);
+    }
+
     public UpdateAgeResponse updateAgeById(UpdateAgeRequest request) {
         jdbcTemplate.update(
                 "UPDATE USER SET AGE = ?  WHERE ID = ?",

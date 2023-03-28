@@ -30,6 +30,10 @@ public class UserService {
         return UpdatePhoneNumberRequest.of(request);
     }
 
+    public String getUsername(Long id) {
+        return userDao.getUsernameById(id);
+    }
+
     public UserResponse getUser(Long id) {
         return UserResponse.of(userDao.getUser(id));
     }

@@ -45,4 +45,13 @@ public class JwtProvider {
             throw new AuthException("JWT 토큰이 잘못되었습니다.");
         }
     }
+
+    public String getUsernameByToken(String token) {
+        Claims body = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return body.get("username").toString();
+    }
 }

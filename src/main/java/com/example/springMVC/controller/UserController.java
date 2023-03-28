@@ -27,18 +27,25 @@ public class UserController {
 
     @PutMapping("/phoneNumber")
     public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(HttpServletRequest httpServletRequest, @RequestBody UpdatePhoneNumberRequest request) {
-        if (!jwtProvider.validToken(httpServletRequest.getHeader("Authorization").trim())) {
-            throw new AuthException("권한 없음");
-        }
+        String token = httpServletRequest.getHeader("Authorization").trim();
+        validateToken(request.getId(), token);
         return ResponseEntity.ok(userService.updatePhoneNumberByNameAndAge(request));
     }
 
     @PutMapping("/age")
     public ResponseEntity<UpdateAgeResponse> updateAge(HttpServletRequest httpServletRequest, @RequestBody UpdateAgeRequest request) {
-        if (!jwtProvider.validToken(httpServletRequest.getHeader("Authorization").trim())) {
+        String token = httpServletRequest.getHeader("Authorization").trim();
+        validateToken(request.getId(), token);
+        return ResponseEntity.ok(userService.updateAgeById(request));
+    }
+
+    private void validateToken(Long id, String token) {
+        if (!jwtProvider.validToken(token)) {
             throw new AuthException("권한 없음");
         }
-        return ResponseEntity.ok(userService.updateAgeById(request));
+        if (!(jwtProvider.getUsernameByToken(token).equals(userService.getUsername(id)))) {
+            throw new AuthException("권한 없음");
+        }
     }
 
     @PostMapping("/signUp")
