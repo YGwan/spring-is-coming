@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### file
+/src/main/java/com/example/springMVC/data
