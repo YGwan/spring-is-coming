@@ -7,4 +7,8 @@
 - Http 
 - HttpServlet 직접 구현해보기
 - SpringMVC
-- Java jdbc와 Spring jdbc 사용해보기
+- JDBC
+- Spring JDBC
+- JWT를 사용한 인증 구현
+- KeyHolder를 사용한 자동 id값 생성
+- ExceptionHandler, ControlerAdvice를 사용한 에러 처리 구현
