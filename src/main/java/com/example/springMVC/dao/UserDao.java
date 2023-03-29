@@ -7,8 +7,12 @@ import com.example.springMVC.exception.UserException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -84,11 +88,21 @@ public class UserDao {
     }
 
     public String addUser(SignUpRequest request) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
-                "INSERT INTO USER VALUES(?,?,?,?,?,?,?)",
-                request.getId(), request.getUsername(), request.getPassword(),
-                request.getAge(), request.getEmail(), request.getName(), request.getPhoneNumber()
-        );
+                (Connection con) -> {
+                    PreparedStatement pstmt = con.prepareStatement(
+                            "INSERT INTO USER(USERNAME, PASSWORD, AGE, EMAIL, NAME, PHONENUMBER)" +
+                                    " VALUES(?,?,?,?,?,?)", new String[]{"ID"}
+                            );
+                            pstmt.setString(1, request.getUsername());
+                            pstmt.setString(2, request.getPassword());
+                            pstmt.setInt(3, request.getAge());
+                            pstmt.setString(4, request.getEmail());
+                            pstmt.setString(5, request.getName());
+                            pstmt.setString(6, request.getPhoneNumber());
+                            return pstmt;
+                }, keyHolder);
         return request.getUsername();
     }
 

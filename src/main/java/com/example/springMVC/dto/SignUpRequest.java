@@ -4,7 +4,6 @@ import javax.validation.constraints.Email;
 
 public class SignUpRequest {
 
-    private Long id;
     private String username;
     private String password;
     private String rePassword;
@@ -17,9 +16,8 @@ public class SignUpRequest {
     public SignUpRequest() {
     }
 
-    public SignUpRequest(Long id, String username, String password, String rePassword,
+    public SignUpRequest(String username, String password, String rePassword,
                          int age, String email, String name, String phoneNumber) {
-        this.id = id;
         this.username = username;
         this.password = password;
         this.rePassword = rePassword;
@@ -27,14 +25,6 @@ public class SignUpRequest {
         this.email = email;
         this.name = name;
         this.phoneNumber = phoneNumber;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
