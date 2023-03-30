@@ -1,7 +1,5 @@
 package com.example.springMVC.dto;
 
-import com.example.springMVC.entity.User;
-
 public class UpdateAgeResponse {
 
     private Long id;
@@ -13,10 +11,6 @@ public class UpdateAgeResponse {
     public UpdateAgeResponse(Long id, Integer age) {
         this.id = id;
         this.age = age;
-    }
-
-    public UpdateAgeResponse(User user) {
-        this(user.getId(), user.getAge());
     }
 
     public Long getId() {

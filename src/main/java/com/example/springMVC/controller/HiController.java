@@ -16,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+@RequestMapping("/hi")
 @Controller
 public class HiController {
 
     private int count = 0;
 
-    @GetMapping("/hi")
     @ResponseBody
     public String hi() {
         return "hi";

@@ -1,45 +1,30 @@
-package com.example.springMVC.entity;
-
-import com.example.springMVC.exception.UserException;
+package com.example.springMVC.dto;
 
 import javax.validation.constraints.Email;
 
-public class User {
+public class SignUpRequest {
 
-    private Long id;
     private String username;
     private String password;
-    private Integer age;
+    private String rePassword;
+    private int age;
     @Email
     private String email;
     private String name;
     private String phoneNumber;
 
-    public User() {
+    public SignUpRequest() {
     }
 
-    public User(Long id, String username, String password, Integer age, String email, String name, String phoneNumber) {
-        this.id = id;
+    public SignUpRequest(String username, String password, String rePassword,
+                         int age, String email, String name, String phoneNumber) {
         this.username = username;
         this.password = password;
+        this.rePassword = rePassword;
         this.age = age;
         this.email = email;
         this.name = name;
         this.phoneNumber = phoneNumber;
-    }
-
-    public void validateEqualByNameAndAge(String name, Integer age) throws UserException {
-        if (!(name.equals(this.name)) || !(age.equals(this.age))) {
-            throw new UserException("정보 불일치");
-        }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -58,7 +43,15 @@ public class User {
         this.password = password;
     }
 
-    public Integer getAge() {
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
+    }
+
+    public int getAge() {
         return age;
     }
 
