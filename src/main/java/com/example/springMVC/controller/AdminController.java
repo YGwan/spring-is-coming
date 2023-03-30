@@ -28,7 +28,6 @@ public class AdminController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.deleteUser(id));

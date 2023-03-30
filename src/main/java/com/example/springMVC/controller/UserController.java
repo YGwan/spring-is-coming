@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -26,15 +25,13 @@ public class UserController {
     }
 
     @PutMapping("/phoneNumber")
-    public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(HttpServletRequest httpServletRequest, @RequestBody UpdatePhoneNumberRequest request) {
-        String token = httpServletRequest.getHeader("Authorization").trim();
+    public ResponseEntity<UpdatePhoneNumberResponse> updatePhoneNumber(@RequestHeader("Authorization") String token, @RequestBody UpdatePhoneNumberRequest request) {
         validateToken(request.getId(), token);
         return ResponseEntity.ok(userService.updatePhoneNumberByNameAndAge(request));
     }
 
     @PutMapping("/age")
-    public ResponseEntity<UpdateAgeResponse> updateAge(HttpServletRequest httpServletRequest, @RequestBody UpdateAgeRequest request) {
-        String token = httpServletRequest.getHeader("Authorization").trim();
+    public ResponseEntity<UpdateAgeResponse> updateAge(@RequestHeader("Authorization") String token, @RequestBody UpdateAgeRequest request) {
         validateToken(request.getId(), token);
         return ResponseEntity.ok(userService.updateAgeById(request));
     }
