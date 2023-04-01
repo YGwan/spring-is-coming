@@ -18,30 +18,44 @@ public class SpringJPAApplication {
     }
 
     private static void playGround(UserRepository userRepository) {
-        // 7-1 findAll
+        // findAll
         List<User> all = userRepository.findAll();
         System.out.println(all.size());
-        ;
 
-        // 7-2 save
+        // save
         userRepository.save(new User("hi", "hi", 12, "dsf", "sdf", "sdf"));
 
-        // 7-3 findAll
+        // findAll
         List<User> allAfterSave = userRepository.findAll();
         System.out.println(allAfterSave.get(0).getName());
         System.out.println(allAfterSave.get(0).getEmail());
 
-        // 7-4 findById
+        // findById
 
-        // 7-5 deleteById
+        // deleteById
 
+        // update User name
+
+        // findAll sort by age asc
+
+        // findALl sort by name dec
     }
 }
 
-// 1. JPA, Hibernate 정의 알아오기
+// Mission1
+// 1. JPA, Hibernate full name, 구현체 알아보기
 // 2. 이 패키지에서 Spring MVC 흔적 제거하기
-// 3. Data 패키지를 없애고 application.properties 에서 키 값을 가져와보는데 @Value
-// 4. Spring MVC에서 시간상 성별을 사용하지 않았으니, sex enum 지워주세요.
-// 5. Spring boot 버전 확인
-// 6. Gradle 버전
+// 3. JPA repository CRUD
+// 4. Data 패키지를 없애고 application.properties 에서 키 값을 가져와보는데 @Value
+// 5. Add User Sex data
 
+// Mission2
+// 6. Add new entity
+// 7. Define relation between entities
+// 8. OneToMany, ManyToOne, Performance comparison
+// 9. Transactional
+
+// Mission3
+// 10. EntityManager, EntityManagerFactory
+// 11. Persistent context
+// 12. cache (lazy write, dirty checking), Identity
