@@ -4,17 +4,19 @@ import com.example.springJPA.dao.UserRepository;
 import com.example.springJPA.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class SpringJPAApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringJPAApplication.class, args);
-//        ConfigurableApplicationContext ctx = SpringApplication.run(SpringJPAApplication.class, args);
-//        UserRepository userRepository = ctx.getBean(UserRepository.class);
-//        playGround(userRepository);
+        ConfigurableApplicationContext ctx = SpringApplication.run(SpringJPAApplication.class, args);
+        UserRepository userRepository = ctx.getBean(UserRepository.class);
+        playGround(userRepository);
     }
 
     private static void playGround(UserRepository userRepository) {
@@ -23,7 +25,7 @@ public class SpringJPAApplication {
         System.out.println(all.size());
 
         // save
-        userRepository.save(new User("hi", "hi", 12, "dsf", "sdf", "sdf"));
+        userRepository.save(new User("hi", "hi", 12, "dsf@abc.com", "sdf", "sdf"));
 
         // findAll
         List<User> allAfterSave = userRepository.findAll();
@@ -31,14 +33,32 @@ public class SpringJPAApplication {
         System.out.println(allAfterSave.get(0).getEmail());
 
         // findById
-
-        // deleteById
+        Long id = 1L;
+        Optional<User> user = userRepository.findById(id);
+        User user1 = user.orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
+        System.out.println(user1.getName());
 
         // update User name
+        user1.setName("yong");
+        userRepository.save(user1);
+        System.out.println(user1.getName());
+
+        // deleteById
+        userRepository.deleteById(id);
+
+        userRepository.save(new User("hi", "hi", 22, "dsf@abc.com", "sdf", "sd-f"));
+        userRepository.save(new User("yong", "hi", 15, "dsdf@abc.com", "pys", "sdf-dsq"));
+        userRepository.save(new User("jin", "hi", 16, "dsszzdf@abc.com", "zkd", "sdf-dsd"));
 
         // findAll sort by age asc
+        List<User> usersOrderByAgeAsc = userRepository.findAll(Sort.by(Sort.Direction.ASC, "age"));
+        System.out.println(usersOrderByAgeAsc.get(0).getAge());
+        System.out.println(usersOrderByAgeAsc.get(2).getAge());
 
         // findALl sort by name dec
+        List<User> usersOrderByNameDec = userRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        System.out.println(usersOrderByNameDec.get(0).getName());
+        System.out.println(usersOrderByNameDec.get(2).getName());
     }
 }
 
