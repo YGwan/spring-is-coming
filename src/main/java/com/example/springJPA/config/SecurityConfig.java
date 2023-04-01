@@ -1,19 +1,18 @@
 package com.example.springJPA.config;
 
-import com.example.springJPA.data.Data;
 import com.example.springJPA.token.JwtProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-
-@Configuration
+@Component
 public class SecurityConfig {
 
-    private static final SecretKey secretKey = Data.getSecretKey();
+    @Value("${jwt.secret}")
+    private String secret;
 
     @Bean
     public JwtProvider jwtProvider() {
-        return new JwtProvider(secretKey);
+        return new JwtProvider(secret);
     }
 }

@@ -4,7 +4,6 @@ import com.example.springJPA.dao.UserRepository;
 import com.example.springJPA.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
 
@@ -12,9 +11,10 @@ import java.util.List;
 public class SpringJPAApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(SpringJPAApplication.class, args);
-        UserRepository userRepository = ctx.getBean(UserRepository.class);
-        playGround(userRepository);
+        SpringApplication.run(SpringJPAApplication.class, args);
+//        ConfigurableApplicationContext ctx = SpringApplication.run(SpringJPAApplication.class, args);
+//        UserRepository userRepository = ctx.getBean(UserRepository.class);
+//        playGround(userRepository);
     }
 
     private static void playGround(UserRepository userRepository) {
