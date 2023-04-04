@@ -1,6 +1,7 @@
 package com.example.springJPA;
 
 import com.example.springJPA.dao.UserRepository;
+import com.example.springJPA.entity.Sex;
 import com.example.springJPA.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +26,7 @@ public class SpringJPAApplication {
         System.out.println(all.size());
 
         // save
-        userRepository.save(new User("hi", "hi", 12, "dsf@abc.com", "sdf", "sdf"));
+        userRepository.save(new User("hi", "hi", Sex.남, 12, "dsf@abc.com", "sdf", "sdf"));
 
         // findAll
         List<User> allAfterSave = userRepository.findAll();
@@ -46,9 +47,9 @@ public class SpringJPAApplication {
         // deleteById
         userRepository.deleteById(id);
 
-        userRepository.save(new User("hi", "hi", 22, "dsf@abc.com", "sdf", "sd-f"));
-        userRepository.save(new User("yong", "hi", 15, "dsdf@abc.com", "pys", "sdf-dsq"));
-        userRepository.save(new User("jin", "hi", 16, "dsszzdf@abc.com", "zkd", "sdf-dsd"));
+        userRepository.save(new User("hi", "hi", Sex.남, 22, "dsf@abc.com", "sdf", "sd-f"));
+        userRepository.save(new User("yong", "hi", Sex.녀, 15, "dsdf@abc.com", "pys", "sdf-dsq"));
+        userRepository.save(new User("jin", "hi", Sex.녀, 16, "dsszzdf@abc.com", "zkd", "sdf-dsd"));
 
         // findAll sort by age asc
         List<User> usersOrderByAgeAsc = userRepository.findAll(Sort.by(Sort.Direction.ASC, "age"));

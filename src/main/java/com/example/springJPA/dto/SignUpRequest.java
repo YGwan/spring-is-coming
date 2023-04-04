@@ -7,7 +7,8 @@ public class SignUpRequest {
     private String username;
     private String password;
     private String rePassword;
-    private int age;
+    private String sex;
+    private Integer age;
     @Email
     private String email;
     private String name;
@@ -16,11 +17,12 @@ public class SignUpRequest {
     public SignUpRequest() {
     }
 
-    public SignUpRequest(String username, String password, String rePassword,
-                         int age, String email, String name, String phoneNumber) {
+    public SignUpRequest(String username, String password, String rePassword, String sex,
+                         Integer age, String email, String name, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.rePassword = rePassword;
+        this.sex = sex;
         this.age = age;
         this.email = email;
         this.name = name;
@@ -51,7 +53,15 @@ public class SignUpRequest {
         this.rePassword = rePassword;
     }
 
-    public int getAge() {
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Integer getAge() {
         return age;
     }
 

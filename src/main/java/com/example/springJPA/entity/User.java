@@ -2,9 +2,7 @@ package com.example.springJPA.entity;
 
 import com.example.springJPA.exception.UserException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
@@ -13,9 +11,10 @@ public class User {
     @GeneratedValue
     @Id
     private Long id;
-
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
     private Integer age;
     @Email
     private String email;
@@ -25,9 +24,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, Integer age, String email, String name, String phoneNumber) {
+    public User(String username, String password, Sex sex, Integer age, String email, String name, String phoneNumber) {
         this.username = username;
         this.password = password;
+        this.sex = sex;
         this.age = age;
         this.email = email;
         this.name = name;
@@ -46,6 +46,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     public String getUsername() {
@@ -68,7 +76,7 @@ public class User {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
