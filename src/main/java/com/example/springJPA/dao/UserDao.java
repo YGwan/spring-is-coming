@@ -97,13 +97,15 @@ public class UserDao {
                             );
                             pstmt.setString(1, request.getUsername());
                             pstmt.setString(2, request.getPassword());
-                            pstmt.setString(3, request.getSex());
-                            pstmt.setInt(3, request.getAge());
-                            pstmt.setString(4, request.getEmail());
-                            pstmt.setString(5, request.getName());
-                            pstmt.setString(6, request.getPhoneNumber());
+                            pstmt.setString(3, request.getSex().name());
+                            pstmt.setInt(4, request.getAge());
+                            pstmt.setString(5, request.getEmail());
+                            pstmt.setString(6, request.getName());
+                            pstmt.setString(7, request.getPhoneNumber());
                             return pstmt;
                 }, keyHolder);
+
+        int id = keyHolder.getKey().intValue();
         return request.getUsername();
     }
 

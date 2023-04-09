@@ -1,5 +1,7 @@
 package com.example.springJPA.dto;
 
+import com.example.springJPA.entity.Sex;
+
 import javax.validation.constraints.Email;
 
 public class SignUpRequest {
@@ -7,7 +9,7 @@ public class SignUpRequest {
     private String username;
     private String password;
     private String rePassword;
-    private String sex;
+    private Sex sex;
     private Integer age;
     @Email
     private String email;
@@ -17,7 +19,7 @@ public class SignUpRequest {
     public SignUpRequest() {
     }
 
-    public SignUpRequest(String username, String password, String rePassword, String sex,
+    public SignUpRequest(String username, String password, String rePassword, Sex sex,
                          Integer age, String email, String name, String phoneNumber) {
         this.username = username;
         this.password = password;
@@ -53,11 +55,11 @@ public class SignUpRequest {
         this.rePassword = rePassword;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Sex sex) {
         this.sex = sex;
     }
 

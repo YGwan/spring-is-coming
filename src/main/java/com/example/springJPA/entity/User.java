@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 @Entity
 public class User {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     private String username;
@@ -19,12 +19,24 @@ public class User {
     @Email
     private String email;
     private String name;
+    @Column(name = "PHONENUMBER")
     private String phoneNumber;
 
     public User() {
     }
 
     public User(String username, String password, Sex sex, Integer age, String email, String name, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.sex = sex;
+        this.age = age;
+        this.email = email;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(Long id, String username, String password, Sex sex, Integer age, String email, String name, String phoneNumber) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.sex = sex;
