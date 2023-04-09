@@ -12,23 +12,13 @@ public class Room {
     @Id
     private Long id;
 
-    private Integer roomNumber;
-
-    private boolean rsvStatus;
-
-    private String usedUsername;
+    private Integer number;
 
     public Room() {
     }
 
-    public Room(Integer roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public Room(Integer roomNumber, boolean rsvStatus, String usedUsername) {
-        this.roomNumber = roomNumber;
-        this.rsvStatus = rsvStatus;
-        this.usedUsername = usedUsername;
+    public Room(Integer number) {
+        this.number = number;
     }
 
     public Long getId() {
@@ -39,27 +29,11 @@ public class Room {
         this.id = id;
     }
 
-    public Integer getRoomNumber() {
-        return roomNumber;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public boolean isRsvStatus() {
-        return rsvStatus;
-    }
-
-    public void setRsvStatus(boolean rsvStatus) {
-        this.rsvStatus = rsvStatus;
-    }
-
-    public String getUsedUsername() {
-        return usedUsername;
-    }
-
-    public void setUsedUsername(String usedUsername) {
-        this.usedUsername = usedUsername;
+    public void setNumber(Integer roomNumber) {
+        this.number = roomNumber;
     }
 }

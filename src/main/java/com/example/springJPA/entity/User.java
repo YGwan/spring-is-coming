@@ -30,7 +30,7 @@ public class User {
     private String phoneNumber;
 
     @ManyToOne
-    @JoinColumn(name = "squashRoom_id")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     public User() {
@@ -127,11 +127,15 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Room getSquashRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setSquashRoom(Room room) {
+    public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public boolean isInRoom() {
+        return room != null;
     }
 }

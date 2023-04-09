@@ -24,7 +24,7 @@ public class SpringJPAApplication {
         playGround(userRepository);
         playGround2(roomRepository);
         playGround3(userRepository, roomRepository);
-        System.out.println(roomRepository.findById(1L).get().getUsedUsername());
+        System.out.println(roomRepository.findById(1L).get().getNumber());
     }
 
     private static void playGround(UserRepository userRepository) {
@@ -79,9 +79,10 @@ public class SpringJPAApplication {
 
     private static void playGround3(UserRepository userRepository, RoomRepository roomRepository) {
         Room room1 = roomRepository.findById(1L).orElseThrow(() -> new DBException("room 없음"));
-        room1.setRsvStatus(true);
-        room1.setUsedUsername(userRepository.findById(2L).get().getUsername());
+        User user1 = userRepository.findById(2L).get();
+        user1.setRoom(room1);
         roomRepository.save(room1);
+        userRepository.save(user1);
     }
 }
 

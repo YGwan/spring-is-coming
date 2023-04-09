@@ -1,5 +1,6 @@
 package com.example.springJPA.dao;
 
+import com.example.springJPA.entity.Room;
 import com.example.springJPA.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,6 +14,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAll();
 
     void deleteById(Long id);
+
+    List<User> findByRoom(Room room);
+
+    List<User> findByRoomNumber(int number);
+
+    Optional<User> findByUsername(String username);
 
     /*
     User getUser(Long id);
