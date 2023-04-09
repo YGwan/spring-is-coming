@@ -1,8 +1,11 @@
 package com.example.springJPA;
 
+import com.example.springJPA.dao.RoomRepository;
 import com.example.springJPA.dao.UserRepository;
 import com.example.springJPA.entity.Sex;
+import com.example.springJPA.entity.Room;
 import com.example.springJPA.entity.User;
+import com.example.springJPA.exception.DBException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,8 +19,12 @@ public class SpringJPAApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext ctx = SpringApplication.run(SpringJPAApplication.class, args);
+        RoomRepository roomRepository = ctx.getBean(RoomRepository.class);
         UserRepository userRepository = ctx.getBean(UserRepository.class);
         playGround(userRepository);
+        playGround2(roomRepository);
+        playGround3(userRepository, roomRepository);
+        System.out.println(roomRepository.findById(1L).get().getUsedUsername());
     }
 
     private static void playGround(UserRepository userRepository) {
@@ -60,6 +67,21 @@ public class SpringJPAApplication {
         List<User> usersOrderByNameDec = userRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         System.out.println(usersOrderByNameDec.get(0).getName());
         System.out.println(usersOrderByNameDec.get(2).getName());
+    }
+
+    private static void playGround2(RoomRepository roomRepository) {
+        roomRepository.save(new Room(1));
+        roomRepository.save(new Room(2));
+        roomRepository.save(new Room(3));
+        roomRepository.save(new Room(4));
+        roomRepository.save(new Room(5));
+    }
+
+    private static void playGround3(UserRepository userRepository, RoomRepository roomRepository) {
+        Room room1 = roomRepository.findById(1L).orElseThrow(() -> new DBException("room 없음"));
+        room1.setRsvStatus(true);
+        room1.setUsedUsername(userRepository.findById(2L).get().getUsername());
+        roomRepository.save(room1);
     }
 }
 

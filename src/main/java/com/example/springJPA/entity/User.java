@@ -11,16 +11,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
     private String username;
+
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
     private Integer age;
+
     @Email
     private String email;
+
     private String name;
+
     @Column(name = "PHONENUMBER")
     private String phoneNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "squashRoom_id")
+    private Room room;
 
     public User() {
     }
@@ -35,8 +46,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(Long id, String username, String password, Sex sex, Integer age, String email, String name, String phoneNumber) {
-        this.id = id;
+    public User(String username, String password, Sex sex, Integer age, String email, String name, String phoneNumber, Room room) {
         this.username = username;
         this.password = password;
         this.sex = sex;
@@ -44,6 +54,7 @@ public class User {
         this.email = email;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.room = room;
     }
 
     public void validateEqualByNameAndAge(String name, Integer age) throws UserException {
@@ -114,5 +125,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Room getSquashRoom() {
+        return room;
+    }
+
+    public void setSquashRoom(Room room) {
+        this.room = room;
     }
 }
