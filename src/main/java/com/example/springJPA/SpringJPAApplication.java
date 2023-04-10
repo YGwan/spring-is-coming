@@ -107,4 +107,4 @@ public class SpringJPAApplication {
 // Mission3
 // 10. EntityManager, EntityManagerFactory - clear
 // 11. Persistent context - clear
-// 12. cache (lazy write, dirty checking), Identity
+// 12. cache (lazy write, dirty checking), Identity - clear
