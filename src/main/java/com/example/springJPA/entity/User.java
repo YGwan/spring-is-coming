@@ -26,7 +26,6 @@ public class User {
 
     private String name;
 
-    @Column(name = "PHONENUMBER")
     private String phoneNumber;
 
     @ManyToOne

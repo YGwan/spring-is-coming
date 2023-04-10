@@ -92,7 +92,7 @@ public class UserDao {
         jdbcTemplate.update(
                 (Connection con) -> {
                     PreparedStatement pstmt = con.prepareStatement(
-                            "INSERT INTO USER(USERNAME, PASSWORD, SEX, AGE, EMAIL, NAME, PHONENUMBER)" +
+                            "INSERT INTO USER(USERNAME, PASSWORD, SEX, AGE, EMAIL, NAME, PHONE_NUMBER)" +
                                     " VALUES(?,?,?,?,?,?,?)", new String[]{"ID"}
                             );
                             pstmt.setString(1, request.getUsername());
