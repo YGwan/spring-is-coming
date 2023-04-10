@@ -104,8 +104,7 @@ public class SpringJPAApplication {
 // post /room/{roomId}/release  -> 예약자 또는 함께 사용하는 유저인지 확인
 // get  /room/{roomId} -> 현재 예약 여부, 예약 생성 시간, 예약자 정보, 함께 사용하는 유저 정보
 
-
 // Mission3
-// 10. EntityManager, EntityManagerFactory
+// 10. EntityManager, EntityManagerFactory - clear
 // 11. Persistent context
 // 12. cache (lazy write, dirty checking), Identity
