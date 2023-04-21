@@ -1,6 +1,6 @@
 package com.example.springBsc.controller;
 
-import com.example.springBsc.entity.Hello;
+import com.example.springBsc.domain.Hello;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

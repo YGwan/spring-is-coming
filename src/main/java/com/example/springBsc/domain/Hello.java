@@ -1,4 +1,4 @@
-package com.example.springBsc.entity;
+package com.example.springBsc.domain;
 
 public class Hello {
 
