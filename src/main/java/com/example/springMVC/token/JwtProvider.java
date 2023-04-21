@@ -2,7 +2,9 @@ package com.example.springMVC.token;
 
 import com.example.springMVC.exception.AuthException;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Duration;
 import java.util.Date;
@@ -13,8 +15,8 @@ public class JwtProvider {
 
     private final Key key;
 
-    public JwtProvider(Key key) {
-        this.key = key;
+    public JwtProvider(String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String createTokenByUsername(String username) {
