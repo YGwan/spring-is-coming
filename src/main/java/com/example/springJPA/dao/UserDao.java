@@ -94,15 +94,15 @@ public class UserDao {
                     PreparedStatement pstmt = con.prepareStatement(
                             "INSERT INTO USER(USERNAME, PASSWORD, SEX, AGE, EMAIL, NAME, PHONE_NUMBER)" +
                                     " VALUES(?,?,?,?,?,?,?)", new String[]{"ID"}
-                            );
-                            pstmt.setString(1, request.getUsername());
-                            pstmt.setString(2, request.getPassword());
-                            pstmt.setString(3, request.getSex().name());
-                            pstmt.setInt(4, request.getAge());
-                            pstmt.setString(5, request.getEmail());
-                            pstmt.setString(6, request.getName());
-                            pstmt.setString(7, request.getPhoneNumber());
-                            return pstmt;
+                    );
+                    pstmt.setString(1, request.getUsername());
+                    pstmt.setString(2, request.getPassword());
+                    pstmt.setString(3, request.getSex().name());
+                    pstmt.setInt(4, request.getAge());
+                    pstmt.setString(5, request.getEmail());
+                    pstmt.setString(6, request.getName());
+                    pstmt.setString(7, request.getPhoneNumber());
+                    return pstmt;
                 }, keyHolder);
 
         int id = keyHolder.getKey().intValue();

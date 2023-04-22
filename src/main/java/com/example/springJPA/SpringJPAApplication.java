@@ -2,8 +2,8 @@ package com.example.springJPA;
 
 import com.example.springJPA.dao.RoomRepository;
 import com.example.springJPA.dao.UserRepository;
-import com.example.springJPA.entity.Sex;
 import com.example.springJPA.entity.Room;
+import com.example.springJPA.entity.Sex;
 import com.example.springJPA.entity.User;
 import com.example.springJPA.exception.DBException;
 import org.springframework.boot.SpringApplication;

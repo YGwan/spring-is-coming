@@ -2,8 +2,8 @@ package com.example.springJPA.controller;
 
 import com.example.springJPA.dto.*;
 import com.example.springJPA.exception.AuthException;
-import com.example.springJPA.service.UserService;
 import com.example.springJPA.exception.UserException;
+import com.example.springJPA.service.UserService;
 import com.example.springJPA.token.JwtProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
