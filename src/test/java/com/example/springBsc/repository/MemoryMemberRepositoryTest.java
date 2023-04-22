@@ -1,7 +1,6 @@
-package com.example.springMVC.repository;
+package com.example.springBsc.repository;
 
 import com.example.springBsc.domain.Member;
-import com.example.springBsc.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

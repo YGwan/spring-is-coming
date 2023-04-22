@@ -1,7 +1,7 @@
 package com.example.springJPA.controller;
 
-import com.example.springJPA.service.UserService;
 import com.example.springJPA.dto.UserResponse;
+import com.example.springJPA.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
