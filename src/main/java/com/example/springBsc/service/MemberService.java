@@ -2,11 +2,9 @@ package com.example.springBsc.service;
 
 import com.example.springBsc.domain.Member;
 import com.example.springBsc.repository.MemberRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
