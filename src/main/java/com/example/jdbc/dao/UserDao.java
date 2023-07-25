@@ -1,11 +1,14 @@
 package com.example.jdbc.dao;
 
+import com.example.jdbc.config.DBConfig;
 import com.example.jdbc.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Objects;
 
 public class UserDao {
 
@@ -20,7 +23,7 @@ public class UserDao {
     }
 
     public User selectById(Long id) throws SQLException {
-        String sql = "SELECT * FROM PERSON WHERE id = ? ";
+        String sql = "SELECT * FROM USER WHERE id = ? ";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, id);
         ResultSet rs = pstmt.executeQuery();
@@ -33,7 +36,11 @@ public class UserDao {
     }
 
     public void insert(User user) throws SQLException {
-        String sql = "INSERT INTO PERSON VALUES (?, ?, ?)";
+        if (Objects.equals(user.getName(), "A")) {
+            throw new IllegalArgumentException();
+        }
+
+        String sql = "INSERT INTO USER VALUES (?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, user.getId());
         pstmt.setString(2, user.getName());
@@ -43,7 +50,7 @@ public class UserDao {
     }
 
     public void delete(Long id) throws SQLException {
-        String sql = "DELETE FROM PERSON WHERE ID=?";
+        String sql = "DELETE FROM USER WHERE ID=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, id);
         pstmt.executeUpdate();
@@ -51,11 +58,47 @@ public class UserDao {
     }
 
     public void updateById(Long id, User user) throws SQLException {
-        String sql = "UPDATE PERSON SET NAME = ?, AGE =? WHERE ID = ?";
+        String sql = "UPDATE USER SET NAME = ?, AGE =? WHERE ID = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, user.getName());
         pstmt.setLong(2, user.getAge());
         pstmt.setLong(3, id);
+        pstmt.executeUpdate();
+        pstmt.close();
+    }
+
+    /**
+     * 유저를 한번에 DB에 저장해야한다.
+     * 저장하다가 한명이라도 저장이 안되면 이전에 저장했던 유저들을 다 삭제해야한다.
+     */
+    public void joinAllUser(List<User> users) throws SQLException {
+        Connection conn = DBConfig.getMySqlConnection();
+        conn.setAutoCommit(false);
+
+        try {
+            for (User user : users) {
+                insert(user, conn);
+            }
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+
+        } finally {
+            conn.setAutoCommit(true);
+            conn.close();
+        }
+    }
+
+    public void insert(User user, Connection conn) throws SQLException {
+        if (Objects.equals(user.getName(), "A")) {
+            throw new IllegalArgumentException();
+        }
+
+        String sql = "INSERT INTO USER VALUES (?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setLong(1, user.getId());
+        pstmt.setString(2, user.getName());
+        pstmt.setInt(3, user.getAge());
         pstmt.executeUpdate();
         pstmt.close();
     }

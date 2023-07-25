@@ -6,13 +6,23 @@ import com.example.jdbc.entity.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCSampleApp {
 
     public static void main(String[] args) {
         try (Connection conn = DBConfig.getMySqlConnection()) {
             UserDao userDao = UserDao.connect(conn);
-            userDao.updateById(2L, new User(2L, "jinhena", 27));
+            List<User> users = new ArrayList<>();
+            users.add(new User(1L, "YongGwan", 26));
+            users.add(new User(2L, "A", 27));
+            users.add(new User(3L, "jinHwan", 27));
+            userDao.joinAllUser(users);
+//
+//            userDao.insert(new User(1L, "YongGwan", 26));
+//            userDao.insert(new User(3L, "A", 27));
+//            userDao.insert(new User(2L, "jinHwan", 27));
         } catch (SQLException e) {
             e.printStackTrace();
         }
