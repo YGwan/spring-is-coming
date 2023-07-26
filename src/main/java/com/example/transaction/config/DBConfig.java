@@ -1,4 +1,4 @@
-package com.example.transaction.jdbcApi.config;
+package com.example.transaction.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ public class DBConfig {
     public static Connection getMySqlConnection() {
         try {
             return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/YGWAN",
+                    "jdbc:mysql://localhost:1013/TEST",
                     "root",
                     "0000"
             );
