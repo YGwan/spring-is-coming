@@ -2,6 +2,7 @@ package com.example.transaction.service;
 
 import com.example.transaction.dao.TransDao;
 import com.example.transaction.entity.User;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
@@ -27,22 +28,26 @@ public class SyncTransService {
         this.transDao = transDao;
     }
 
-    public void useSyncTransByJdbc1(List<User> users) {
+    public void useSyncTransByJdbc(List<User> users) {
         try {
-            joinAllUserFromSyncTranByJdbc1(users);
+            joinAllUserFromSyncTranByJdbc(users);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void useJdbcTransactionTemplate(List<User> users) {
+        joinAllUserByJdbcTransactionTemplate(users);
+    }
+
     public void useJpaTransactionTemplate(List<User> users) {
-        joinAllUserByTransactionTemplate(users);
+        joinAllUserByJpaTransactionTemplate(users);
     }
 
     /**
      * transaction synchronization : JDBC 사용
      */
-    private void joinAllUserFromSyncTranByJdbc1(List<User> users) throws SQLException {
+    private void joinAllUserFromSyncTranByJdbc(List<User> users) throws SQLException {
         TransactionSynchronizationManager.initSynchronization();
         Connection conn = DataSourceUtils.getConnection(dataSource);
         conn.setAutoCommit(false);
@@ -62,10 +67,29 @@ public class SyncTransService {
         }
     }
 
+
+    /**
+     * transaction Template 사용 - JDBC
+     */
+    public void joinAllUserByJdbcTransactionTemplate(List<User> users) {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+
+        transactionTemplate.executeWithoutResult(status -> {
+            for (User user : users) {
+                try {
+                    transDao.joinUser(user);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
     /**
      * transaction Template 사용
      */
-    public void joinAllUserByTransactionTemplate(List<User> users) {
+    public void joinAllUserByJpaTransactionTemplate(List<User> users) {
         JpaTransactionManager transactionManager = new JpaTransactionManager(emf);
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
 
