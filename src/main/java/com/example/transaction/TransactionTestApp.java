@@ -23,6 +23,7 @@ public class TransactionTestApp {
 
         transService.useJpa(users);
         transService.useJdbc(users);
-        transService.useSyncTrans(users);
+        transService.useSyncTransByJdbc(users);
+        transService.useSyncTransByJpa(users);
     }
 }

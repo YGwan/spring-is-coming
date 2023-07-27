@@ -3,8 +3,10 @@ package com.example.transaction.dao;
 import com.example.transaction.config.DBConfig;
 import com.example.transaction.entity.User;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -94,9 +96,9 @@ public class TransTestDao {
     }
 
     /**
-     * transaction synchronization 사용
+     * transaction synchronization : JDBC 사용
      */
-    public void joinAllUserFromSyncTrans(List<User> users) throws SQLException {
+    public void joinAllUserFromSyncTranByJdbc(List<User> users) throws SQLException {
         TransactionSynchronizationManager.initSynchronization();
         Connection conn = DataSourceUtils.getConnection(dataSource);
         conn.setAutoCommit(false);
@@ -114,6 +116,19 @@ public class TransTestDao {
             TransactionSynchronizationManager.unbindResource(dataSource);
             TransactionSynchronizationManager.clearSynchronization();
         }
+    }
+
+    public void joinAllUserFromSyncTranByJpa(List<User> users) throws SQLException {
+        JpaTransactionManager transactionManager = new JpaTransactionManager(emf);
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+        EntityManager em = emf.createEntityManager();
+
+        transactionTemplate.execute(count -> {
+            for (User user : users) {
+                em.persist(user);
+            }
+            return users.size();
+        });
     }
 
     public void insert(User user) throws SQLException {

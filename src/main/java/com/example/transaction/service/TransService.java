@@ -34,9 +34,17 @@ public class TransService {
         }
     }
 
-    public void useSyncTrans(List<User> users) {
+    public void useSyncTransByJdbc(List<User> users) {
         try {
-            transTestDao.joinAllUserFromSyncTrans(users);
+            transTestDao.joinAllUserFromSyncTranByJdbc(users);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void useSyncTransByJpa(List<User> users) {
+        try {
+            transTestDao.joinAllUserFromSyncTranByJpa(users);
         } catch (SQLException e) {
             e.printStackTrace();
         }
