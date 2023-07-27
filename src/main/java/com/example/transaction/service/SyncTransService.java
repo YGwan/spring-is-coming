@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -36,8 +35,8 @@ public class SyncTransService {
         }
     }
 
-    public void useSyncTransByJpa(List<User> users) {
-        joinAllUserFromSyncTranByJpa(users);
+    public void useJpaTransactionTemplate(List<User> users) {
+        joinAllUserByTransactionTemplate(users);
     }
 
     /**
@@ -64,18 +63,20 @@ public class SyncTransService {
     }
 
     /**
-     * transaction synchronization : JPA 사용
+     * transaction Template 사용
      */
-    public void joinAllUserFromSyncTranByJpa(List<User> users) {
+    public void joinAllUserByTransactionTemplate(List<User> users) {
         JpaTransactionManager transactionManager = new JpaTransactionManager(emf);
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
-        EntityManager em = emf.createEntityManager();
 
-        transactionTemplate.execute(count -> {
+        transactionTemplate.executeWithoutResult(status -> {
             for (User user : users) {
-                em.persist(user);
+                try {
+                    transDao.joinUser(user);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            return users.size();
         });
     }
 }
