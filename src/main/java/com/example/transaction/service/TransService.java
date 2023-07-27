@@ -57,4 +57,12 @@ public class TransService {
             e.printStackTrace();
         }
     }
+
+    public void useAbstractTransByJpa(List<User> users) {
+        try {
+            transTestDao.joinAllUserFromAbstractTranByJpa(users);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -25,6 +25,7 @@ public class TransactionTestApp {
 //        transService.useJdbc(users);
 //        transService.useSyncTransByJdbc(users);
 //        transService.useSyncTransByJpa(users);
-        transService.useAbstractTransByJdbc(users);
+//        transService.useAbstractTransByJdbc(users);
+        transService.useAbstractTransByJpa(users);
     }
 }

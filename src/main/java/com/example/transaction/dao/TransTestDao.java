@@ -144,6 +144,21 @@ public class TransTestDao {
     public void joinAllUserFromAbstractTranByJdbc(List<User> users) throws SQLException {
         PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try {
+            for (User user : users) {
+                insert(user);
+            }
+            transactionManager.commit(status);
+
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void joinAllUserFromAbstractTranByJpa(List<User> users) throws SQLException {
+        PlatformTransactionManager transactionManager = new JpaTransactionManager(emf);
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
         try {
             for (User user : users) {
@@ -156,6 +171,7 @@ public class TransTestDao {
             System.out.println(e.getMessage());
         }
     }
+
 
     public void insert(User user) throws SQLException {
         Connection conn = DataSourceUtils.getConnection(dataSource);
