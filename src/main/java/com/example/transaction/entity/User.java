@@ -1,15 +1,23 @@
 package com.example.transaction.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
-    private final Long id;
-    private final String name;
-    private final Integer age;
+    @Id
+    private Long id;
+    private String name;
+    private Integer age;
 
     public User(Long id, String name, Integer age) {
         this.id = id;
         this.name = name;
         this.age = age;
+    }
+
+    public User() {
     }
 
     public Long getId() {
