@@ -25,14 +25,14 @@ public class TransactionTestApp {
         SyncTransService syncTransService = ac.getBean(SyncTransService.class);
         AbsTransService absTransService = ac.getBean(AbsTransService.class);
 
-//        basicTransService.useJpa(users);
-//        basicTransService.useJdbc(users);
+        basicTransService.useJpa(users);
+        basicTransService.useJdbc(users);
 
-//        syncTransService.useSyncTransByJdbc1(users);
-//        syncTransService.useJpaTransactionTemplate(users);
+        syncTransService.useSyncTransByJdbc(users);
+        syncTransService.useJpaTransactionTemplate(users);
         syncTransService.useJdbcTransactionTemplate(users);
 
-//        absTransService.useAbstractTransByJdbc(users);
-//        absTransService.useAbstractTransByJpa(users);
+        absTransService.useAbstractTransByJdbc(users);
+        absTransService.useAbstractTransByJpa(users);
     }
 }

@@ -87,7 +87,7 @@ public class SyncTransService {
     }
 
     /**
-     * transaction Template 사용
+     * transaction Template 사용 - JPA
      */
     public void joinAllUserByJpaTransactionTemplate(List<User> users) {
         JpaTransactionManager transactionManager = new JpaTransactionManager(emf);

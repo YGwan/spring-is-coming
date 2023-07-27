@@ -61,6 +61,9 @@ public class AbsTransService {
         }
     }
 
+    /**
+     * transaction abstraction : JPA 사용
+     */
     public void joinAllUserFromAbstractTranByJpa(List<User> users) throws SQLException {
         PlatformTransactionManager transactionManager = new JpaTransactionManager(emf);
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());

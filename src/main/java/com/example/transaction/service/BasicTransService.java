@@ -80,6 +80,4 @@ public class BasicTransService {
             em.close();
         }
     }
-
-
 }
