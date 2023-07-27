@@ -49,4 +49,12 @@ public class TransService {
             e.printStackTrace();
         }
     }
+
+    public void useAbstractTransByJdbc(List<User> users) {
+        try {
+            transTestDao.joinAllUserFromAbstractTranByJdbc(users);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

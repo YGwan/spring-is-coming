@@ -2,9 +2,13 @@ package com.example.transaction.dao;
 
 import com.example.transaction.config.DBConfig;
 import com.example.transaction.entity.User;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -118,6 +122,9 @@ public class TransTestDao {
         }
     }
 
+    /**
+     * transaction synchronization : JPA 사용
+     */
     public void joinAllUserFromSyncTranByJpa(List<User> users) throws SQLException {
         JpaTransactionManager transactionManager = new JpaTransactionManager(emf);
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
@@ -129,6 +136,25 @@ public class TransTestDao {
             }
             return users.size();
         });
+    }
+
+    /**
+     * transaction synchronization : JDBC 사용
+     */
+    public void joinAllUserFromAbstractTranByJdbc(List<User> users) throws SQLException {
+        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            for (User user : users) {
+                insert(user);
+            }
+            transactionManager.commit(status);
+
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            System.out.println(e.getMessage());
+        }
     }
 
     public void insert(User user) throws SQLException {
