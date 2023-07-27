@@ -1,7 +1,9 @@
 package com.example.transaction;
 
 import com.example.transaction.entity.User;
-import com.example.transaction.service.TransService;
+import com.example.transaction.service.AbsTransService;
+import com.example.transaction.service.BasicTransService;
+import com.example.transaction.service.SyncTransService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -16,16 +18,20 @@ public class TransactionTestApp {
         ApplicationContext ac = SpringApplication.run(TransactionTestApp.class, args);
         List<User> users = new ArrayList<>();
         users.add(new User(1L, "YongGwan", 26));
-        users.add(new User(2L, "A", 27));
+        users.add(new User(2L, "AB", 27));
         users.add(new User(3L, "jinHwan", 27));
 
-        TransService transService = ac.getBean(TransService.class);
+        BasicTransService basicTransService = ac.getBean(BasicTransService.class);
+        SyncTransService syncTransService = ac.getBean(SyncTransService.class);
+        AbsTransService absTransService = ac.getBean(AbsTransService.class);
 
-//        transService.useJpa(users);
-//        transService.useJdbc(users);
-//        transService.useSyncTransByJdbc(users);
-//        transService.useSyncTransByJpa(users);
-//        transService.useAbstractTransByJdbc(users);
-        transService.useAbstractTransByJpa(users);
+//        basicTransService.useJpa(users);
+//        basicTransService.useJdbc(users);
+
+//        syncTransService.useSyncTransByJdbc1(users);
+        syncTransService.useSyncTransByJpa(users);
+
+//        absTransService.useAbstractTransByJdbc(users);
+//        absTransService.useAbstractTransByJpa(users);
     }
 }
