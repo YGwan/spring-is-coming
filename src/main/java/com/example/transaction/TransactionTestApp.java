@@ -4,6 +4,7 @@ import com.example.transaction.entity.User;
 import com.example.transaction.service.AbsTransService;
 import com.example.transaction.service.BasicTransService;
 import com.example.transaction.service.SyncTransService;
+import com.example.transaction.service.TransService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -18,22 +19,25 @@ public class TransactionTestApp {
         ApplicationContext ac = SpringApplication.run(TransactionTestApp.class, args);
         List<User> users = new ArrayList<>();
         users.add(new User(1L, "YongGwan", 26));
-        users.add(new User(2L, "A", 27));
+        users.add(new User(2L, "AB", 27));
         users.add(new User(3L, "jinHwan", 27));
 
         BasicTransService basicTransService = ac.getBean(BasicTransService.class);
         SyncTransService syncTransService = ac.getBean(SyncTransService.class);
         AbsTransService absTransService = ac.getBean(AbsTransService.class);
+        TransService transService = ac.getBean(TransService.class);
 
-        basicTransService.useJpa(users);
-        basicTransService.useJdbc(users);
+//        basicTransService.useJpa(users);
+//        basicTransService.useJdbc(users);
+//
+//        syncTransService.useSyncTransByJdbc(users);
+//        syncTransService.useJpaTransactionTemplate(users);
+//        syncTransService.useJdbcTransactionTemplate(users);
+//
+//        absTransService.useAbstractTransByJdbc(users);
+//        absTransService.useAbstractTransByJpa(users);
+//        absTransService.useAbstractTrans(users);
 
-        syncTransService.useSyncTransByJdbc(users);
-        syncTransService.useJpaTransactionTemplate(users);
-        syncTransService.useJdbcTransactionTemplate(users);
-
-        absTransService.useAbstractTransByJdbc(users);
-        absTransService.useAbstractTransByJpa(users);
-        absTransService.useAbstractTrans(users);
+        transService.joinAllUser(users);
     }
 }
