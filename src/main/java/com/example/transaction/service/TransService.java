@@ -18,7 +18,7 @@ public class TransService {
     }
 
     /**
-     * transaction abstraction
+     * declarative transaction
      */
     @Transactional
     public void joinAllUser(List<User> users) {
