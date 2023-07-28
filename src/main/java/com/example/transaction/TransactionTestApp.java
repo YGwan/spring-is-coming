@@ -27,17 +27,21 @@ public class TransactionTestApp {
         AbsTransService absTransService = ac.getBean(AbsTransService.class);
         TransService transService = ac.getBean(TransService.class);
 
-//        basicTransService.useJpa(users);
-//        basicTransService.useJdbc(users);
-//
-//        syncTransService.useSyncTransByJdbc(users);
-//        syncTransService.useJpaTransactionTemplate(users);
-//        syncTransService.useJdbcTransactionTemplate(users);
-//
-//        absTransService.useAbstractTransByJdbc(users);
-//        absTransService.useAbstractTransByJpa(users);
-//        absTransService.useAbstractTrans(users);
+        // 직접 트랜잭션을 열고 닫고 트랜잭션을 매번 메소드 인자로 보내는 가장 기본적인 트랜잭션 처리 방식
+        basicTransService.useJpa(users);
+        basicTransService.useJdbc(users);
 
+        // 트랜잭션 동기화 + 트랜잭션 템플릿을 적용한 트랜잭션 처리 방식
+        syncTransService.useSyncTransByJdbc(users);
+        syncTransService.useJpaTransactionTemplate(users);
+        syncTransService.useJdbcTransactionTemplate(users);
+
+        // 트랜잭션 추상화를 적용한 트랜잭션 처리 방식
+        absTransService.useAbstractTransByJdbc(users);
+        absTransService.useAbstractTransByJpa(users);
+        absTransService.useAbstractTrans(users);
+
+        // @Transactional 어노테이션을 사용한 트랜잭션 처리 방식
         transService.joinAllUser(users);
     }
 }

@@ -78,7 +78,7 @@ public class AbsTransService {
     }
 
     /**
-     * transaction abstraction
+     * transaction abstraction : ALL
      */
     public void joinAllUserFromAbstractTran(List<User> users) {
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
