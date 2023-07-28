@@ -20,7 +20,7 @@ public class UserDao {
     }
 
     public User selectById(Long id) throws SQLException {
-        String sql = "SELECT * FROM PERSON WHERE id = ? ";
+        String sql = "SELECT * FROM USER WHERE id = ? ";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, id);
         ResultSet rs = pstmt.executeQuery();
@@ -33,7 +33,7 @@ public class UserDao {
     }
 
     public void insert(User user) throws SQLException {
-        String sql = "INSERT INTO PERSON VALUES (?, ?, ?)";
+        String sql = "INSERT INTO USER VALUES (?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, user.getId());
         pstmt.setString(2, user.getName());
@@ -43,7 +43,7 @@ public class UserDao {
     }
 
     public void delete(Long id) throws SQLException {
-        String sql = "DELETE FROM PERSON WHERE ID=?";
+        String sql = "DELETE FROM USER WHERE ID=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, id);
         pstmt.executeUpdate();
@@ -51,7 +51,7 @@ public class UserDao {
     }
 
     public void updateById(Long id, User user) throws SQLException {
-        String sql = "UPDATE PERSON SET NAME = ?, AGE =? WHERE ID = ?";
+        String sql = "UPDATE USER SET NAME = ?, AGE =? WHERE ID = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, user.getName());
         pstmt.setLong(2, user.getAge());

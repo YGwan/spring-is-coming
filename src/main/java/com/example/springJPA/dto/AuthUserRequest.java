@@ -1,7 +1,10 @@
 package com.example.springJPA.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class AuthUserRequest {
 
+    @NotNull
     private String token;
 
     public AuthUserRequest() {
