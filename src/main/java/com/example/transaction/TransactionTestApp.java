@@ -18,7 +18,7 @@ public class TransactionTestApp {
         ApplicationContext ac = SpringApplication.run(TransactionTestApp.class, args);
         List<User> users = new ArrayList<>();
         users.add(new User(1L, "YongGwan", 26));
-        users.add(new User(2L, "AB", 27));
+        users.add(new User(2L, "A", 27));
         users.add(new User(3L, "jinHwan", 27));
 
         BasicTransService basicTransService = ac.getBean(BasicTransService.class);
@@ -34,5 +34,6 @@ public class TransactionTestApp {
 
         absTransService.useAbstractTransByJdbc(users);
         absTransService.useAbstractTransByJpa(users);
+        absTransService.useAbstractTrans(users);
     }
 }
