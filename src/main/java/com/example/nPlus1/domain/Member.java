@@ -1,5 +1,6 @@
 package com.example.nPlus1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -16,4 +17,12 @@ public class Member {
 
     @ManyToOne
     private Team team;
+
+    public Member(String name, Team team) {
+        this.name = name;
+        this.team = team;
+    }
+
+    protected Member() {
+    }
 }
