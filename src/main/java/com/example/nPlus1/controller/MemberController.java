@@ -27,9 +27,21 @@ public class MemberController {
         return members.stream().map(MemberResponse::of).collect(Collectors.toList());
     }
 
+    @GetMapping("members/fj")
+    public List<MemberResponse> memberListUsedFetchJoin() {
+        List<Member> members = memberRepository.findALlUsedFetchJoin();
+        return members.stream().map(MemberResponse::of).collect(Collectors.toList());
+    }
+
     @GetMapping("members/teamName")
     public List<String> membersTeamName() {
         List<Member> members = memberRepository.findAll();
+        return memberService.getMembersTeamName(members);
+    }
+
+    @GetMapping("members/teamName/fj")
+    public List<String> membersTeamNameUsedFetchJoin() {
+        List<Member> members = memberRepository.findALlUsedFetchJoin();
         return memberService.getMembersTeamName(members);
     }
 }
