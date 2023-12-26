@@ -1,10 +1,11 @@
 package com.example.nPlus1.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 
+@BatchSize(size = 100)
 @Getter
 @Entity
 public class Member {
