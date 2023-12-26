@@ -2,6 +2,7 @@ package com.example.nPlus1.dto;
 
 import com.example.nPlus1.domain.Member;
 import com.example.nPlus1.domain.Team;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 @Getter
@@ -11,6 +12,7 @@ public class MemberResponse {
 
     private String name;
 
+    @JsonIgnore
     private Team team;
 
     public MemberResponse() {
